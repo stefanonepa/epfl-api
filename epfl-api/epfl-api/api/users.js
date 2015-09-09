@@ -2,7 +2,8 @@
 (function (usersController) {
     usersController.init = function (app) {
         var ldapContext = require("../data/ldap");
-        
+        var urlValidator = require('./accessValidator');
+
         var getLdapInfoAndSendIt = function(res, sciper) {
             ldapContext.users.getUserBySciper(sciper, function (result) {
                 res.json(ldapContext.factories.User(result));
@@ -18,21 +19,21 @@
             }
         };
         
-        app.get("/", function (req, res) {
+        app.get("/", urlValidator,  function (req, res) {
             var sciper = req.query.sciper;
             checkSciper(sciper, function(validSciper) {
                 getLdapInfoAndSendIt(res, validSciper);
             });
         });
         
-        app.get("/:sciper", function (req, res) {
+        app.get("/:sciper", urlValidator, function (req, res) {
             var sciper = req.params.sciper;
             checkSciper(sciper, function (validSciper) {
                 getLdapInfoAndSendIt(res, validSciper);
             });
         });
         
-        app.post('/', function (req, res) {
+        app.post('/', urlValidator, function (req, res) {
             var sciper = req.body.sciper;
             checkSciper(sciper, function (validSciper) {
                 getLdapInfoAndSendIt(res, validSciper);

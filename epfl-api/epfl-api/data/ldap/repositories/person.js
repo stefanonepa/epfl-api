@@ -17,10 +17,10 @@ module.exports = function (options) {
                 } else {
                     next({});
                 }
-                console.log('entry: ' + JSON.stringify(entry.object));
+                //console.log('entry: ' + JSON.stringify(entry.object));
             });
             res.on('searchReference', function (referral) {
-                console.log('referral: ' + referral.uris.join());
+                //console.log('referral: ' + referral.uris.join());
             });
             res.on('error', function (err) {
                 console.error('error: ' + err.message);
@@ -30,7 +30,7 @@ module.exports = function (options) {
                 console.error('error: ' + err.message);
             });
             res.on('end', function (result) {
-                console.log('status: ' + result.status);
+                //console.log('status: ' + result.status);
             });
         });
     };
