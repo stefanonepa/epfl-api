@@ -63,6 +63,9 @@ dlldata.c
 *.svclog
 *.scc
 
+*.sln
+*.njsproj
+
 # Chutzpah Test files
 _Chutzpah*
 
