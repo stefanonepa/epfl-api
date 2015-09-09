@@ -2,7 +2,7 @@
 (function (usersController) {
     usersController.init = function (app) {
         var ldapContext = require("../data/ldap");
-        var urlValidator = require('./accessValidator');
+        var urlValidator = require('./security/accessValidator');
 
         var getLdapInfoAndSendIt = function(res, sciper) {
             ldapContext.users.getUserBySciper(sciper, function (result) {
