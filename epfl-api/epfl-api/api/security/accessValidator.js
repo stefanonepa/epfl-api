@@ -4,6 +4,8 @@ module.exports = function accessValidator(req, res, next) {
     if (req.key === 'public') {
          return next();
     }
-    res.redirect('error/403');
-    //res.status(403).send('Forbidden');
+
+    var err = new Error();
+    err.status = 403;
+    throw err;
 }

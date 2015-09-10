@@ -1,12 +1,12 @@
 ﻿//!! api have to define an init function !!
-//define the routing system of the api, it 's called by server.js
+//called by server.js it define the routing system of the api's if the file name doesn't start with '_'
 "use strict";
 (function (api) {
     api.init = function (app) {
         require('fs').readdirSync(__dirname + '/').forEach(function (file) {
             var filename = __filename.slice(__dirname.length + 1);
         
-            if (file.match(/\.js$/) !== null && file !== filename) {
+            if (file.match(/\.js$/) !== null && file.charAt(0) !== '_') {
                 var name = file.replace('.js', '');
                 var currentController = require("./" + name);
                 var currentRouter = require('express')();
@@ -18,15 +18,6 @@
                     req.key = key;
                     next();
                 });
-            } else if (file === 'error.js') {
-                var errorController = require('./error');
-                var errorRouter = require('express')();
-                errorController.init(errorRouter);
-
-                app.use('/api/error', errorRouter);
-                app.use('/api/:key/error', errorRouter);
-                app.use('/api/:key/:controller/error', errorRouter);
-                
             };
         });
     };

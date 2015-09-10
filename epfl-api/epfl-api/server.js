@@ -2,6 +2,7 @@
 var express = require('express');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var errorHandler = require('./core/errorHandler');
 //var session = require('express-session');
 //var cookieParser = require('cookie-parser');
 var app = express();
@@ -19,6 +20,7 @@ app.use(express.static(__dirname + "/public"));
 
 //Map the routes
 api.init(app);
+app.use(errorHandler);
 
 app.listen(3000);
 console.log('Listening on port 3000...');
