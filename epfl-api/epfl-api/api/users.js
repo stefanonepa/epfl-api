@@ -6,7 +6,7 @@
 
         var getLdapInfoAndSendIt = function(res, sciper) {
             ldapContext.users.getUserBySciper(sciper, function (result) {
-                res.json(ldapContext.factories.User(result));
+                res.json(res.cap.view(ldapContext.factories.User(result)));
             });
         }
 
