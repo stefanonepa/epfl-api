@@ -1,9 +1,9 @@
 ﻿"use strict";
-(function (ldapOptions) {
+module.exports = function (customOptions) {
+    var ldapOptions = {};
 
-    ldapOptions.defaults = {
-        serverUrl : 'ldap://ldap.epfl.ch',
-        searchBase : 'o=epfl,c=ch'
-    };
+    ldapOptions.url = 'ldap://ldap.epfl.ch';
+    ldapOptions.searchBase = 'o=epfl,c=ch';
     
-})(module.exports);
+    return ldapOptions;
+};

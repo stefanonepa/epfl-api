@@ -2,13 +2,18 @@
 
 var capabilities = {
     'internal': {
-        reqControl: function (req) { return isInternal(req); },
-        'view': function (u) { return u }
+        reqIsValid: function (req) { return isInternal(req); },
+        view: function (u) { return u }
     },
     'public': {
-        reqControl: function (req) { return true; },
-        'view': function (u) { return u.asPublicData(); }
+        reqIsValid: function (req) { return true; },
+        view: function (u) { return u.asPublicData(); }
     }
+}
+
+function isInternal(req){
+    //TODO: validate the key
+    return req.key === 'internal';
 }
 
 function error403(req) {
@@ -19,20 +24,24 @@ function error403(req) {
 }
 
 module.exports = function accessValidator(req, res, next) {
-    var cap = capabilities[req.key];
+    var cap;
+    if (req.key === 'public') {
+        cap = capabilities[req.key];
+    } else {
+        cap = capabilities['internal'];
+    }
 
     if (!cap) {
         error403(req);
         return;
     }
 
-    if (! cap.reqControl(req)) {
+    if (! cap.reqIsValid(req)) {
         // This query is not allowed from this client
         error403(req);
         return;
     }
-
-    req.cap = cap;
-    res.cap = cap;
+    
+    req.dataContext = require("../../data/ldap/ldapContext")(cap);
     next();
 }

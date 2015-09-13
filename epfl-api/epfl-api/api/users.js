@@ -1,18 +1,17 @@
 ﻿"use strict";
 (function (usersController) {
     usersController.init = function (app) {
-        var ldapContext = require("../data/ldap");
         var urlValidator = require('./security/accessValidator');
 
-        var getLdapInfoAndSendIt = function(res, sciper) {
-            ldapContext.users.getUserBySciper(sciper, function (result) {
-                res.json(res.cap.view(ldapContext.factories.User(result)));
+        var getLdapInfoAndSendIt = function(req, res, sciper) {
+            req.dataContext.users.getUserBySciper(req.sciper, function (result) {
+                res.json(result);
             });
         }
 
-        var checkSciper = function(sciper, next) {
-            if (ldapContext.validator.isSciperValid(sciper)) {
-                next(sciper);
+        var checkSciper = function(req, next) {
+            if (req.dataContext.validator.isSciperValid(req.sciper)) {
+                next(req.sciper);
             } else {
                 //TODO: Log or manage error: Param doesn't match
                 throw('Error: Paramater sciper not valid!');
@@ -20,23 +19,23 @@
         };
         
         app.get("/", urlValidator,  function (req, res) {
-            var sciper = req.query.sciper;
-            checkSciper(sciper, function(validSciper) {
-                getLdapInfoAndSendIt(res, validSciper);
+            req.sciper = req.query.sciper;
+            checkSciper(req, function(validSciper) {
+                getLdapInfoAndSendIt(req, res, validSciper);
             });
         });
         
         app.get("/:sciper", urlValidator, function (req, res) {
-            var sciper = req.params.sciper;
-            checkSciper(sciper, function (validSciper) {
-                getLdapInfoAndSendIt(res, validSciper);
+            req.sciper = req.params.sciper;
+            checkSciper(req, function (validSciper) {
+                getLdapInfoAndSendIt(req, res, validSciper);
             });
         });
         
         app.post('/', urlValidator, function (req, res) {
-            var sciper = req.body.sciper;
-            checkSciper(sciper, function (validSciper) {
-                getLdapInfoAndSendIt(res, validSciper);
+            req.sciper = req.body.sciper;
+            checkSciper(req, function (validSciper) {
+                getLdapInfoAndSendIt(req, res, validSciper);
             });
         });
     };
