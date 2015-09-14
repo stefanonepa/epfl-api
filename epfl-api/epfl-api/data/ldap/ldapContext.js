@@ -1,14 +1,11 @@
 ﻿"use strict";
 module.exports = function ldapContext(capability) {
-    var options = require('./ldapOptions')(null);
-    options.capability = capability;
-    var client = require("./ldapClient");
-    client.options = options;
+    var options = require('./ldapOptions')(capability, null);
+    var client = require("./ldapClient")(options);
     
     var context = {};
     context.validator = require('./ldapValidators');
-    context.users = require('./repositories/person');
-    context.users.client = client;
-
+    context.users = require('./repositories/person')(client);
+    
     return context;
 };

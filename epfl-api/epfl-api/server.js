@@ -16,6 +16,7 @@ app.use(express.static(__dirname + '/public'));
 
 //Map the routes
 api.init(app);
+//TODO: Enable and Refine the errorHanlder
 //app.use(errorHandler);
 
 app.listen(3000);

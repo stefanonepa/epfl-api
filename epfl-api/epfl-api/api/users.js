@@ -3,7 +3,7 @@
     usersController.init = function (app) {
         var urlValidator = require('./security/accessValidator');
 
-        var getLdapInfoAndSendIt = function(req, res, sciper) {
+        var getLdapInfoAndSendIt = function (req, res, sciper) {
             req.dataContext.users.getUserBySciper(req.sciper, function (result) {
                 res.json(result);
             });

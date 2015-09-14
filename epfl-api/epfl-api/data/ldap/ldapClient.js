@@ -1,5 +1,5 @@
 ﻿"use strict";
-module.exports = function ldapClient() {
+module.exports = function ldapClient(options) {
     var ldapClient = {};
     var ldap = require('ldapjs');
     var client = ldap.createClient({
@@ -8,6 +8,6 @@ module.exports = function ldapClient() {
         sizeLimit: 100
     });
 
-    client.options;
+    client.options = options;
     return client;
 };
