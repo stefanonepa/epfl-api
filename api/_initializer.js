@@ -14,7 +14,6 @@
                 currentController.init(currentRouter);
                 app.use('/api/:key/' + name, currentRouter);
                 app.param('key', function (req, res, next, key) {
-                    console.log('key: %s', key);
                     req.key = key;
                     next();
                 });

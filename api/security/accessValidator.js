@@ -20,7 +20,6 @@ function error403(req) {
     var err = new Error();
     err.status = 403;
     throw err;
-
 }
 
 module.exports = function accessValidator(req, res, next) {
