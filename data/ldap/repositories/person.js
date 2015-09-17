@@ -42,7 +42,7 @@ module.exports = function (client) {
     
     personRepo.getUserByName = function (req, res, next) {
         var opts = {
-            filter: '(&(objectClass=posixAccount)(|(cn=' + req.name + '*)))',
+            filter: '(&(objectClass=posixAccount)(|(cn=' + req.name + ')))',
             scope: 'sub'
         };
         
@@ -82,5 +82,46 @@ module.exports = function (client) {
         });
     };
 
+    personRepo.searchUserByName = function (req, res, next) {
+        var opts = {
+            filter: '(&(objectClass=posixAccount)(|(cn=' + req.name + '*)))',
+            scope: 'sub'
+        };
+
+        var groupedUser = Array();
+
+        client.search(client.options.searchBase, opts, function (err, ldapRes) {
+            ldapRes.on('searchEntry', function (entry) {
+                if (typeof entry.json != 'undefined') {
+                    if (groupedUser[entry.object.uniqueIdentifier] === undefined) {
+                        groupedUser[entry.object.uniqueIdentifier] = Array();
+                    }
+                    groupedUser[entry.object.uniqueIdentifier].push(entry.object);
+                } else {
+                    next(req, res, {});
+                }
+                //console.log('entry: ' + JSON.stringify(entry.object));
+            });
+            ldapRes.on('searchReference', function (referral) {
+                //console.log('referral: ' + referral.uris.join());
+            });
+            ldapRes.on('error', function (err) {
+                console.error('error: ' + err.message);
+
+                next(req, res, {});
+            });
+            ldapRes.on('timeout', function (err) {
+                console.error('error: ' + err.message);
+            });
+            ldapRes.on('end', function () {
+                var users = Array();
+                groupedUser.forEach(function(userEntries, index, array) {
+                    users.push(client.options.capability.view(userFactory(userEntries)));
+                });
+                next(req, res, users);
+                //console.log('status: ' + result.status);
+            });
+        });
+    };
     return personRepo;
 };
