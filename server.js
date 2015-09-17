@@ -1,10 +1,14 @@
 ﻿var express = require('express');
+var path = require('path');
 var favicon = require('serve-favicon');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var errorHandler = require('./core/errorHandler');
 var app = express();
 var api = require('./api/_initializer.js');
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 // Opt into Services
 //https://github.com/expressjs/morgan

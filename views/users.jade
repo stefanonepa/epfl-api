@@ -1,0 +1,7 @@
+﻿
+extends layout
+include ./mixins/userMix.jade
+
+block content
+    each user in users
+        +userMix(user)

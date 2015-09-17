@@ -10,11 +10,13 @@ module.exports = function (client) {
             filter: '(&(objectClass=posixAccount)(|(uniqueIdentifier=' + sciper + ')))',
             scope: 'sub'
         };
-        
+
+        var results = Array();
+
         client.search(client.options.searchBase, opts, function (err, res) {
             res.on('searchEntry', function (entry) {
                 if (typeof entry.json != 'undefined') {
-                    next(client.options.capability.view(userFactory(entry.object)));
+                    results.push(entry.object);
                 } else {
                     next({});
                 }
@@ -31,33 +33,54 @@ module.exports = function (client) {
             res.on('timeout', function (err) {
                 console.error('error: ' + err.message);
             });
-            res.on('end', function (result) {
+            res.on('end', function () {
+                next(client.options.capability.view(userFactory(results)));
                 //console.log('status: ' + result.status);
             });
         });
     };
     
-    //personRepo.getUserBySciper = function (sciper, next) {
-    //    //TODO: Add a dev or offline mod that answer always a mock or fake object
-    //    var mockObject = {};
+    personRepo.getUserByName = function (name, next) {
+        var opts = {
+            filter: '(&(objectClass=posixAccount)(|(cn=' + name + '*)))',
+            scope: 'sub'
+        };
         
-    //    mockObject.username = "bob";
-    //    mockObject.sciper = sciper;
-    //    mockObject.email = "bob.marley@epfl.ch";
-    //    mockObject.optionalProperties = {
-    //        caca: "boudin",
-    //        pipi: "boudi"
-    //    };
+        var groupedUser = Array();
         
-    //    mockObject.asPublicData = function () {
-    //        return {
-    //            sciper: mockObject.sciper,
-    //            email: mockObject.email
-
-    //        };
-    //    };
-    //    next(client.options.capability.view(mockObject));
-    //};
+        client.search(client.options.searchBase, opts, function (err, res) {
+            res.on('searchEntry', function (entry) {
+                if (typeof entry.json != 'undefined') {
+                    if (groupedUser[entry.object.uniqueIdentifier] === undefined) {
+                        groupedUser[entry.object.uniqueIdentifier] = Array();
+                    }
+                    groupedUser[entry.object.uniqueIdentifier].push(entry.object);
+                } else {
+                    next({});
+                }
+                //console.log('entry: ' + JSON.stringify(entry.object));
+            });
+            res.on('searchReference', function (referral) {
+                //console.log('referral: ' + referral.uris.join());
+            });
+            res.on('error', function (err) {
+                console.error('error: ' + err.message);
+                
+                next(new Object());
+            });
+            res.on('timeout', function (err) {
+                console.error('error: ' + err.message);
+            });
+            res.on('end', function () {
+                var users = Array();
+                groupedUser.forEach(function(userEntries, index, array) {
+                    users.push(client.options.capability.view(userFactory(userEntries)));
+                });
+                next(users);
+                //console.log('status: ' + result.status);
+            });
+        });
+    };
 
     return personRepo;
 };
