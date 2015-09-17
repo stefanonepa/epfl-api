@@ -5,7 +5,7 @@
             a(href="mailto:"+userData.email) !{userData.email}
     div(style="float:right, display:block")
         div Sciper :&nbsp;
-            a(href="http://people.epfl.ch/cgi-bin/people?op=adminuser&lang=en&cvlang=en&id="+userData.sciper) !{userData.sciper}
+            a(href="http://people.epfl.ch/cgi-bin/people?op=admindata&lang=en&cvlang=en&id="+userData.sciper) !{userData.sciper}
     each accred in userData.accreds
         div(style="float:right, display:block")
             h3 !{accred.unitAcronym}

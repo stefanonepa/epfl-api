@@ -4,7 +4,7 @@ module.exports = function ldapClient(options) {
     var client = ldap.createClient({
         url: options.url,
         timeLimit: 1,
-        sizeLimit: 100
+        sizeLimit: 10
     });
 
     client.options = options;

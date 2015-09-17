@@ -17,5 +17,15 @@
     "morgan": "^1.6.1",
     "jade": "~1.6.0",
     "serve-favicon": "^2.1.7"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "chai-http": "*",
+    "mocha": "*",
+    "request": "*"
+  },
+  "scripts": {
+    "test": "mocha test/premier-test",
+    "start": "node server.js"
   }
 }

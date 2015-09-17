@@ -5,78 +5,78 @@ module.exports = function (client) {
     var personRepo = {};
     personRepo.client = client;
 
-    personRepo.getUserBySciper = function (sciper, next) {
+    personRepo.getUserBySciper = function (req, res, next) {
         var opts = {
-            filter: '(&(objectClass=posixAccount)(|(uniqueIdentifier=' + sciper + ')))',
+            filter: '(&(objectClass=posixAccount)(|(uniqueIdentifier=' + req.sciper + ')))',
             scope: 'sub'
         };
 
         var results = Array();
 
-        client.search(client.options.searchBase, opts, function (err, res) {
-            res.on('searchEntry', function (entry) {
+        client.search(client.options.searchBase, opts, function (err, ldapRes) {
+            ldapRes.on('searchEntry', function (entry) {
                 if (typeof entry.json != 'undefined') {
                     results.push(entry.object);
                 } else {
-                    next({});
+                    next(req, res, {});
                 }
                 //console.log('entry: ' + JSON.stringify(entry.object));
             });
-            res.on('searchReference', function (referral) {
+            ldapRes.on('searchReference', function (referral) {
                 //console.log('referral: ' + referral.uris.join());
             });
-            res.on('error', function (err) {
+            ldapRes.on('error', function (err) {
                 console.error('error: ' + err.message);
  
-                next(new Object());
+                next(req, res, {});
             });
-            res.on('timeout', function (err) {
+            ldapRes.on('timeout', function (err) {
                 console.error('error: ' + err.message);
             });
-            res.on('end', function () {
-                next(client.options.capability.view(userFactory(results)));
+            ldapRes.on('end', function () {
+                next(req, res, [client.options.capability.view(userFactory(results))]);
                 //console.log('status: ' + result.status);
             });
         });
     };
     
-    personRepo.getUserByName = function (name, next) {
+    personRepo.getUserByName = function (req, res, next) {
         var opts = {
-            filter: '(&(objectClass=posixAccount)(|(cn=' + name + '*)))',
+            filter: '(&(objectClass=posixAccount)(|(cn=' + req.name + '*)))',
             scope: 'sub'
         };
         
         var groupedUser = Array();
         
-        client.search(client.options.searchBase, opts, function (err, res) {
-            res.on('searchEntry', function (entry) {
+        client.search(client.options.searchBase, opts, function (err, ldapRes) {
+            ldapRes.on('searchEntry', function (entry) {
                 if (typeof entry.json != 'undefined') {
                     if (groupedUser[entry.object.uniqueIdentifier] === undefined) {
                         groupedUser[entry.object.uniqueIdentifier] = Array();
                     }
                     groupedUser[entry.object.uniqueIdentifier].push(entry.object);
                 } else {
-                    next({});
+                    next(req, res, {});
                 }
                 //console.log('entry: ' + JSON.stringify(entry.object));
             });
-            res.on('searchReference', function (referral) {
+            ldapRes.on('searchReference', function (referral) {
                 //console.log('referral: ' + referral.uris.join());
             });
-            res.on('error', function (err) {
+            ldapRes.on('error', function (err) {
                 console.error('error: ' + err.message);
                 
-                next(new Object());
+                next(req, res, {});
             });
-            res.on('timeout', function (err) {
+            ldapRes.on('timeout', function (err) {
                 console.error('error: ' + err.message);
             });
-            res.on('end', function () {
+            ldapRes.on('end', function () {
                 var users = Array();
                 groupedUser.forEach(function(userEntries, index, array) {
                     users.push(client.options.capability.view(userFactory(userEntries)));
                 });
-                next(users);
+                next(req, res, users);
                 //console.log('status: ' + result.status);
             });
         });

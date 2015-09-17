@@ -1,4 +1,5 @@
-﻿var express = require('express');
+﻿"use strict";
+var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var morgan = require('morgan');
@@ -27,3 +28,5 @@ api.init(app);
 
 app.listen(3000);
 console.log('Listening on port 3000...');
+
+module.exports = app;
