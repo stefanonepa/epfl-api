@@ -23,7 +23,7 @@ module.exports = function User(ldapUserArray) {
                 unitNameEN: userEntry['ou;lang-en'],
                 phone: userEntry.telephoneNumber,
                 office: userEntry.roomNumber,
-                address: userEntry.postalAddress ? userEntry.postalAddress.replace(/\$/g, '\n') : '',
+                address: userEntry.postalAddress ? userEntry.postalAddress,
                 position: userEntry['title;lang-en'],
                 status: userEntry.organizationalStatus
             }
