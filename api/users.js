@@ -23,7 +23,7 @@
                 req.dataContext.users.getUserBySciper(req, res, showResult);
             } else {
                 //TODO: Log or manage error: Param doesn't match
-                throw ('Error: Paramater sciper not valid!');
+                throw ('Error: Parameter sciper not valid!');
             }
             
         });
@@ -31,6 +31,11 @@
         app.get("/name/:name", urlValidator, function(req, res) {
             req.name = req.params.name;
             req.dataContext.users.getUserByName(req, res, showResult);
+        });
+
+        app.get("/search/:name", urlValidator, function(req, res) {
+            req.name = req.params.name;
+            req.dataContext.users.searchUserByName(req, res, showResult);
         });
 
         /*app.post('/', urlValidator, function (req, res) {
