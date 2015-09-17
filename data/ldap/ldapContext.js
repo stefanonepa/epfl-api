@@ -6,6 +6,7 @@ module.exports = function ldapContext(capability) {
     var context = {};
     context.validator = require('./ldapValidators');
     context.users = require('./repositories/person')(client);
-    
+    context.units = require('./repositories/unit')(client);
+
     return context;
 };
