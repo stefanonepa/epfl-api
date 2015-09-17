@@ -17,6 +17,8 @@ describe('Initial checks', function () {
 });
 
 describe('API / User', function(){
+
+    // Testing getUserBySciper
     it('should be able to read JSON data',function(done){
         request.get('http://localhost:3000/api/public/users/sciper/169419', function(err, json, headers) {
             /*
@@ -31,4 +33,7 @@ describe('API / User', function(){
             done();
         });
     });
+
+    // ToDo: Test getUserByName
+    // ToDo: Test searchUserByName
 });
