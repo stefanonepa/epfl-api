@@ -23,6 +23,11 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 
 //Map the routes
 api.init(app);
+
+app.get("/",  function (req, res) {
+    res.render('homepage');
+});
+
 //TODO: Enable and Refine the errorHanlder
 //app.use(errorHandler);
 
