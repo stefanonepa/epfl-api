@@ -7,15 +7,23 @@ module.exports = function User(ldapUserArray) {
     userModel.sciper = ldapUserArray[0].uniqueIdentifier;
     userModel.email = ldapUserArray[0].mail;
     userModel.accreds = Array();
+    userModel.memberOf = Array();
 
-    ldapUserArray.forEach(function(userEntry, index, array) {
+    if (ldapUserArray[0].memberOf !== undefined) {
+        ldapUserArray[0].memberOf.forEach(function (groupName, index, groupArray) {
+            userModel.memberOf.push(groupName);
+        });
+    }
+
+    ldapUserArray.forEach(function (userEntry, index, array) {
+        
         userModel.accreds.push(
             {
                 unitAcronym: userEntry.ou[0],
                 unitNameEN: userEntry['ou;lang-en'],
                 phone: userEntry.telephoneNumber,
                 office: userEntry.roomNumber,
-                address: userEntry.postalAddress ? userEntry.postalAddress.replace('$', '\n') : '',
+                address: userEntry.postalAddress ? userEntry.postalAddress.replace(/\$/g, '\n') : '',
                 position: userEntry['title;lang-en'],
                 status: userEntry.organizationalStatus
             }
@@ -34,6 +42,6 @@ module.exports = function User(ldapUserArray) {
             accreds: userModel.accreds
         };
     }
-
+    
     return userModel;
 };
