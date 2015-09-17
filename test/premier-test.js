@@ -9,7 +9,6 @@ describe('Get user by sciper', function () {
     it('return userdata in json', function (done) {
         request.get('http://localhost:3000/api/public/users/sciper/169419', function (err, res, body) {
             expect(res.statusCode).to.equal(200);
-            excp
             done();
         });
     });
