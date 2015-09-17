@@ -21,13 +21,19 @@
   },
   "devDependencies": {
     "mocha": "*",
+    "pre-commit": "^1.1.1",
     "request": "*"
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js"
+    "start": "node server.js",
+    "SayHello": "echo \"Pre Commit Says Hello !\" && exit 0"
   },
   "bugs": {
     "url": "https://github.com/stefanonepa/epfl-api/issues"
-  }
+  },
+  "pre-commit": [
+    "SayHello",
+    "test"
+  ]
 }
