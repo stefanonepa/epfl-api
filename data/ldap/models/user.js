@@ -41,7 +41,7 @@ module.exports = function User(ldapUserArray) {
             email: userModel.email,
             accreds: userModel.accreds
         };
-    }
+    };
     
     return userModel;
 };
