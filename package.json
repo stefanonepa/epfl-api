@@ -10,22 +10,20 @@
   "dependencies": {
     "body-parser": "^1.14.0",
     "cookie-parser": "^1.3.5",
-    "debug": "^2.0.0",
+    "debug": "^2.2.0",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
+    "jade": "~1.6.0",
     "ldapjs": "^0.7.1",
     "morgan": "^1.6.1",
-    "jade": "~1.6.0",
-    "serve-favicon": "^2.1.7"
+    "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
-    "chai": "*",
-    "chai-http": "*",
     "mocha": "*",
     "request": "*"
   },
   "scripts": {
-    "test": "mocha test/premier-test",
+    "test": "mocha",
     "start": "node server.js"
   }
 }
