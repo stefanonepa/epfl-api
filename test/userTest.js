@@ -3,12 +3,12 @@ var request = require('request');
 var expect = require('chai').expect;
 
 function debug(msg) {
-    // console.log(msg);
+    //console.log(msg);
 }
 
 describe('Initial checks', function () {
-    it('should respond to GET',function(done){
-        request.get('http://localhost:3000/', function (err, res) {
+    it('should respond to GET', function (done) {
+       request.get('http://localhost:3000', function (err, res) {
             expect(res.statusCode).to.equal(200);
             done();
         });

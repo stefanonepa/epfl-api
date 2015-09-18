@@ -3,7 +3,6 @@ var request = require('request');
 var expect = require('chai').expect;
 
 describe('API / Unit', function(){
-
     // Testing getUnitByName
     it('should be able to read JSON data',function(done){
         request.get('http://localhost:3000/api/public/units/name/igm-ge', function(err, json, headers) {
