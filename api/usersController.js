@@ -26,7 +26,7 @@ var ParameterException = require('../core/exceptions').ParameterException;
                 req.sciper = req.params.sciper;
                 req.dataContext.users.getUserBySciper(req, res, showResult);
             } else {
-                throw new ParameterException({Error: 'Parameter sciper not valid!'});
+                throw new ParameterException({message: 'Sciper not valid!', parameterName: 'sciper'});
             }
             
         });

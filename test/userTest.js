@@ -1,4 +1,6 @@
-﻿var assert = require('assert');
+﻿"use strict";
+
+var assert = require('assert');
 var request = require('request');
 var expect = require('chai').expect;
 
