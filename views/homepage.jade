@@ -2,14 +2,25 @@ extends layout
 block content
     h1 EPFL-api
 
+    h2 Information
+    p Please check our 
+        a(href="https://github.com/stefanonepa/epfl-api") github repository
+
     h2 General usage
     p You can add the "html" parameter in the URL query string to have an HTML view of the results. Example:
     a(href='/api/public/users/sciper/150938?html') /api/public/users/sciper/150938?html
 
+    p Two API are avalaible
+        ul
+            li /api/public : For external data access - only public informations
+            li /api/internal : For internal data access - more information, but you will need an EPFL accreditation and ask for an API key
+                a(href='/api/generate-key') here
+
+
     h3 Tips
     p: #[span Install] #[a(href="http://jsonview.com/") JSONview] #[plugin for your browser. It will simplify a lot the viewing of API pages!]
 
-    h2 API usage (examples)
+    h2 API usage (examples with public access)
     ul
         li api
             ul
@@ -29,40 +40,45 @@ block content
                                             a(href='/api/public/users/sciper/243371') 243371
                                         li
                                             a(href='/api/public/users/sciper/G18171') G18171
-
                                 li /name
                                     ul
                                         li
-                                            a(href='/api/public/users/name/banc') banc
+                                            a(href='/api/public/users/name/bancal') bancal
                                         li
-                                            a(href='/api/public/users/name/borb') borb
+                                            a(href='/api/public/users/name/borboen') borboen
                                         li
-                                            a(href='/api/public/users/name/quatra') quatra
+                                            a(href='/api/public/users/name/quatravaux') quatravaux
                                         li
-                                            a(href='/api/public/users/name/nep') nep
-                li internal
-                    ul
-                        li /users
+                                            a(href='/api/public/users/name/nepa') nepa
+                                li /search
+                                    ul
+                                        li
+                                            a(href='/api/public/users/search/banc') banc*
+                                        li
+                                            a(href='/api/public/users/search/borbo') borbo*
+                                        li
+                                            a(href='/api/public/users/search/quatrav') quatrav*
+                                        li
+                                            a(href='/api/public/users/search/nep') nep*
+                        li /units
                             ul
-                                li /sciper
-                                    ul
-                                        li
-                                            a(href='/api/internal/users/sciper/150938') 150938
-                                        li
-                                            a(href='/api/internal/users/sciper/169419') 169419
-                                        li
-                                            a(href='/api/internal/users/sciper/189989') 189989
-                                        li
-                                            a(href='/api/internal/users/sciper/243371') 243371
-                                        li
-                                            a(href='/api/internal/users/sciper/G18171') G18171
                                 li /name
                                     ul
                                         li
-                                            a(href='/api/internal/users/name/banc') banc
+                                            a(href='/api/public/units/name/enac') enac
                                         li
-                                            a(href='/api/internal/users/name/borb') borb
+                                            a(href='/api/public/units/name/igm-ge') igm-ge
                                         li
-                                            a(href='/api/internal/users/name/quatra') quatra
+                                            a(href='/api/public/units/name/sti-it') sti-it
                                         li
-                                            a(href='/api/internal/users/name/nep') nep
+                                            a(href='/api/public/units/name/enac-it') enac-it
+                                li /search
+                                    ul
+                                        li
+                                            a(href='/api/public/units/search/ena') ena*
+                                        li
+                                            a(href='/api/public/units/search/igm') igm*
+                                        li
+                                            a(href='/api/public/units/search/sti') sti*
+                                        li
+                                            a(href='/api/public/units/search/enac-') enac-*
