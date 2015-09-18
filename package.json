@@ -22,6 +22,7 @@
   "devDependencies": {
     "jshint": "^2.8.0",
     "mocha": "*",
+    "chai": "*",
     "pre-commit": "^1.1.1",
     "request": "*"
   },

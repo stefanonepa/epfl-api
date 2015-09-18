@@ -1,0 +1,3 @@
+﻿before(function () {
+    require('../server');
+});

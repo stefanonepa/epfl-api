@@ -1,6 +1,11 @@
-﻿"use strict";
-module.exports = function ErrorHandler(err, req, res, next) {
+﻿var exceptions = require('./exceptions');
+var ParameterException = exceptions.ParameterException;
 
+"use strict";
+module.exports = function ErrorHandler(err, req, res, next) {
+    if (err instanceof ParameterException) {
+        res.json({error: "Parameter error", parameterName: err.parameterName});
+    }
     if (err.status === null ) {
         res.status(500);
         res.render('error', { error: err });

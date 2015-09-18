@@ -1,7 +1,7 @@
 "use strict";
 (function (unitsController) {
     unitsController.init = function (app) {
-        var urlValidator = require('./security/accessValidator');
+        var keyDataFilter = require('../core/security/keyDataFilter');
 
         function showResult(req, res, results) {
             if (req.query.html != undefined) {
@@ -11,13 +11,13 @@
             }
         }
 
-        app.get("/name/:unitName", urlValidator, function(req, res) {
+        app.get("/name/:unitName", keyDataFilter, function(req, res) {
             console.log("unit: "+req.params.unitName);
             req.unit = req.params.unitName;
             req.dataContext.units.getUnitByName(req, res, showResult);
         });
 
-        app.get("/search/:unitName", urlValidator, function(req, res) {
+        app.get("/search/:unitName", keyDataFilter, function(req, res) {
             console.log("unit: "+req.params.unitName);
             req.unit = req.params.unitName;
             req.dataContext.units.searchUnitByName(req, res, showResult);

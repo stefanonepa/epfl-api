@@ -2,10 +2,10 @@
 module.exports = function (client) {
     var userFactory = require('../models/user');
 
-    var personRepo = {};
-    personRepo.client = client;
+    var usersRepo = {};
+    usersRepo.client = client;
 
-    personRepo.getUserBySciper = function (req, res, next) {
+    usersRepo.getUserBySciper = function (req, res, next) {
         var opts = {
             filter: '(&(objectClass=posixAccount)(|(uniqueIdentifier=' + req.sciper + ')))',
             scope: 'sub'
@@ -40,7 +40,7 @@ module.exports = function (client) {
         });
     };
     
-    personRepo.getUserByName = function (req, res, next) {
+    usersRepo.getUserByName = function (req, res, next) {
         var opts = {
             filter: '(&(objectClass=posixAccount)(|(cn=' + req.name + ')))',
             scope: 'sub'
@@ -82,7 +82,7 @@ module.exports = function (client) {
         });
     };
 
-    personRepo.searchUserByName = function (req, res, next) {
+    usersRepo.searchUserByName = function (req, res, next) {
         var opts = {
             filter: '(&(objectClass=posixAccount)(|(cn=' + req.name + '*)))',
             scope: 'sub'
@@ -98,7 +98,7 @@ module.exports = function (client) {
                     }
                     groupedUser[entry.object.uniqueIdentifier].push(entry.object);
                 } else {
-                    next(req, res, {});
+                    next(req, res, []);
                 }
                 //console.log('entry: ' + JSON.stringify(entry.object));
             });
@@ -108,7 +108,7 @@ module.exports = function (client) {
             ldapRes.on('error', function (err) {
                 console.error('error: ' + err.message);
 
-                next(req, res, {});
+                next(req, res, []);
             });
             ldapRes.on('timeout', function (err) {
                 console.error('error: ' + err.message);
@@ -123,5 +123,5 @@ module.exports = function (client) {
             });
         });
     };
-    return personRepo;
+    return usersRepo;
 };
