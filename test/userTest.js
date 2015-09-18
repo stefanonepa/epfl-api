@@ -21,15 +21,11 @@ describe('API / User', function(){
     // Testing getUserBySciper
     it('should be able to read JSON data',function(done){
         request.get('http://localhost:3000/api/public/users/sciper/169419', function(err, json, headers) {
-            /*
-             * HOW AWFUL IS THAT ?
-             */
-            //console.log(json.body);
-            var chunk = json.body.substring(1,json.body.length-1);
-            //console.log(chunk);
-            var strung = JSON.parse(chunk);
-            //console.log(strung.displayName);
-            assert.equal(strung.displayName, 'Nicolas Borboën', 'Checking displayName value');
+
+            var dataArray = JSON.parse(json.body);
+            //console.log(JSON.stringify(dataArray[0]));
+
+            assert.equal(dataArray[0].displayName, 'Nicolas Borboën', 'Checking displayName value');
             done();
         });
     });
