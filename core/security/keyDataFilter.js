@@ -22,7 +22,7 @@ function error403(req) {
     throw err;
 }
 
-module.exports = function accessValidator(req, res, next) {
+module.exports = function keyDataFilter(req, res, next) {
     var cap;
     if (req.key === 'public') {
         cap = capabilities[req.key];
