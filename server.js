@@ -29,7 +29,7 @@ app.get("/",  function (req, res) {
 });
 
 //TODO: Enable and Refine the errorHanlder
-//app.use(errorHandler);
+app.use(errorHandler);
 
 app.listen(3000);
 console.log('Listening on port 3000...');

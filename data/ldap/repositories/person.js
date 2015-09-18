@@ -98,7 +98,7 @@ module.exports = function (client) {
                     }
                     groupedUser[entry.object.uniqueIdentifier].push(entry.object);
                 } else {
-                    next(req, res, {});
+                    next(req, res, []);
                 }
                 //console.log('entry: ' + JSON.stringify(entry.object));
             });
@@ -108,7 +108,7 @@ module.exports = function (client) {
             ldapRes.on('error', function (err) {
                 console.error('error: ' + err.message);
 
-                next(req, res, {});
+                next(req, res, []);
             });
             ldapRes.on('timeout', function (err) {
                 console.error('error: ' + err.message);

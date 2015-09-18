@@ -1,4 +1,8 @@
 ﻿"use strict";
+
+var ParameterException = require('../core/exceptions').ParameterException;
+
+
 (function (usersController) {
     usersController.init = function (app) {
         var urlValidator = require('./security/accessValidator');
@@ -22,8 +26,7 @@
                 req.sciper = req.params.sciper;
                 req.dataContext.users.getUserBySciper(req, res, showResult);
             } else {
-                //TODO: Log or manage error: Param doesn't match
-                throw ('Error: Parameter sciper not valid!');
+                throw new ParameterException({Error: 'Parameter sciper not valid!'});
             }
             
         });

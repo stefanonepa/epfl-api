@@ -2,6 +2,10 @@
 var request = require('request');
 var expect = require('chai').expect;
 
+function debug(msg) {
+    // console.log(msg);
+}
+
 describe('Initial checks', function () {
     it('should respond to GET',function(done){
         request.get('http://localhost:3000/', function (err, res) {
@@ -31,6 +35,28 @@ describe('API / User', function(){
         });
     });
 
+    // Test guest sciper
+    it.only('handle errors in query parameters',function(done){
+        request.get('http://localhost:3000/api/public/users/sciper/Z18171', function(err, json, headers) {
+            debug(json.body);
+            debug(JSON.parse(json.body));
+            assert(JSON.parse(json.body).error.toLowerCase().indexOf("parameter") >= 0);
+            done();
+        });
+    });
+
+    // Test guest sciper
+    it('should be able to read JSON data with guest sciper',function(done){
+        request.get('http://localhost:3000/api/public/users/sciper/G18171', function(err, json, headers) {
+
+            var dataArray = JSON.parse(json.body);
+            //console.log(JSON.stringify(dataArray[0]));
+
+            assert.equal(dataArray[0].displayName, 'Nicolas Borboën', 'Checking displayName value');
+            done();
+        });
+    });
+
     // Test getUserByName
     it('should be able to get user by Name',function(done){
         request.get('http://localhost:3000/api/public/users/name/bancal', function(err, json, headers) {
@@ -43,5 +69,16 @@ describe('API / User', function(){
         });
     });
 
-    // ToDo: Test searchUserByName
+
+    // Test searchUserByName
+    it('should be able to search user by Name',function(done){
+        request.get('http://localhost:3000/api/public/users/search/banc', function(err, json, headers) {
+
+            var dataArray = JSON.parse(json.body);
+            console.log(JSON.stringify(dataArray[0]));
+
+            assert.equal(dataArray[0].displayName, 'Samuel Bancal', 'Checking displayName value');
+            done();
+        });
+    });
 });

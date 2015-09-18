@@ -9,6 +9,7 @@ module.exports = function User(ldapUserArray) {
     userModel.accreds = Array();
     userModel.memberOf = Array();
 
+
     if (ldapUserArray[0].memberOf !== undefined) {
         ldapUserArray[0].memberOf.forEach(function (groupName, index, groupArray) {
             userModel.memberOf.push(groupName);
