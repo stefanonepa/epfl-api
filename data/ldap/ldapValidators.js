@@ -3,7 +3,7 @@
     
     ldapValidator.isSciperValid = function (sciper) {
         //réf: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp
-        var regexp = /^(g)?\d{6}/gi ;
+        var regexp = /^(G)?\d{5,6}/gi ;
         var match = sciper.match(regexp);
         return match !== null;
     };

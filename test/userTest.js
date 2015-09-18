@@ -52,7 +52,7 @@ describe('API / User', function(){
             var dataArray = JSON.parse(json.body);
             debug(JSON.stringify(dataArray[0]));
 
-            //assert.equal(dataArray[0].displayName, 'Nicolas Borboën', 'Checking displayName value');
+            assert.equal(dataArray[0].displayName, 'Nicolas Borboen', 'Checking displayName value');
             done();
         });
     });
