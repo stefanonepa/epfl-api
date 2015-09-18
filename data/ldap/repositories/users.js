@@ -2,10 +2,10 @@
 module.exports = function (client) {
     var userFactory = require('../models/user');
 
-    var personRepo = {};
-    personRepo.client = client;
+    var usersRepo = {};
+    usersRepo.client = client;
 
-    personRepo.getUserBySciper = function (req, res, next) {
+    usersRepo.getUserBySciper = function (req, res, next) {
         var opts = {
             filter: '(&(objectClass=posixAccount)(|(uniqueIdentifier=' + req.sciper + ')))',
             scope: 'sub'
@@ -40,7 +40,7 @@ module.exports = function (client) {
         });
     };
     
-    personRepo.getUserByName = function (req, res, next) {
+    usersRepo.getUserByName = function (req, res, next) {
         var opts = {
             filter: '(&(objectClass=posixAccount)(|(cn=' + req.name + ')))',
             scope: 'sub'
@@ -82,7 +82,7 @@ module.exports = function (client) {
         });
     };
 
-    personRepo.searchUserByName = function (req, res, next) {
+    usersRepo.searchUserByName = function (req, res, next) {
         var opts = {
             filter: '(&(objectClass=posixAccount)(|(cn=' + req.name + '*)))',
             scope: 'sub'
@@ -123,5 +123,5 @@ module.exports = function (client) {
             });
         });
     };
-    return personRepo;
+    return usersRepo;
 };

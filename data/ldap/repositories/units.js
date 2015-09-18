@@ -2,11 +2,11 @@
 module.exports = function (client) {
     var unitFactory = require('../models/unit');
 
-    var unitRepo = {};
-    unitRepo.client = client;
+    var unitsRepo = {};
+    unitsRepo.client = client;
 
     // TODO: get unit by id (note id = fund)
-    unitRepo.getUnitByName = function (req, res, next) {
+    unitsRepo.getUnitByName = function (req, res, next) {
         var opts = { // ldapsearch -h ldap.epfl.ch -b 'o=epfl,c=ch' -LLL -x '(&(objectclass=organizationalunit))'
             filter: '(&(objectClass=organizationalunit)(|(ou=' + req.unit + ')))',
             scope: 'sub'
@@ -48,7 +48,7 @@ module.exports = function (client) {
         });
     };
 
-    unitRepo.searchUnitByName = function (req, res, next) {
+    unitsRepo.searchUnitByName = function (req, res, next) {
         var opts = { // ldapsearch -h ldap.epfl.ch -b 'o=epfl,c=ch' -LLL -x '(&(objectclass=organizationalunit))'
             filter: '(&(objectClass=organizationalunit)(|(ou=' + req.unit + '*)))',
             scope: 'sub'
@@ -90,5 +90,5 @@ module.exports = function (client) {
         });
     };
 
-    return unitRepo;
+    return unitsRepo;
 };

@@ -12,7 +12,7 @@
                 var currentRouter = require('express')();
 
                 currentController.init(currentRouter);
-                app.use('/api/:key/' + name, currentRouter);
+                app.use('/api/:key/' + name.replace('Controller', ''), currentRouter);
                 app.param('key', function (req, res, next, key) {
                     req.key = key;
                     next();

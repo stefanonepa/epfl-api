@@ -41,6 +41,6 @@ module.exports = function keyDataFilter(req, res, next) {
         return;
     }
     
-    req.dataContext = require("../../data/ldap/ldapContext")(cap);
+    req.dataContext = require("../../data/ldap/context")(cap);
     next();
 }
