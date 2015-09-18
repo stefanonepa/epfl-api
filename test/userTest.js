@@ -42,7 +42,7 @@ describe('API / User', function(){
         request.get('http://localhost:3000/api/public/users/sciper/Z18171', function(err, json, headers) {
             debug(json.body);
             debug(JSON.parse(json.body));
-            assert(JSON.parse(json.body).error.toLowerCase().indexOf("parameter") >= 0);
+            assert(JSON.parse(json.body).errorType.toLowerCase().indexOf("parameter") >= 0);
             done();
         });
     });

@@ -1,7 +1,5 @@
 ﻿"use strict";
-
 var ParameterException = require('../core/exceptions').ParameterException;
-
 
 (function (usersController) {
     usersController.init = function (app) {
