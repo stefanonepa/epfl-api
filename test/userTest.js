@@ -9,9 +9,10 @@ describe('Initial checks', function () {
             done();
         });
     });
-    it('and it should return 200', function () {
+    it('and it should return 200', function (done) {
         request.get('http://localhost:3000/api/public/users/sciper/169419', function (err, res, body) {
             assert.ok(res.statusCode===200, "Request status 200");
+            done();
         });
     });
 });
@@ -30,6 +31,17 @@ describe('API / User', function(){
         });
     });
 
-    // ToDo: Test getUserByName
+    // Test getUserByName
+    it('should be able to get user by Name',function(done){
+        request.get('http://localhost:3000/api/public/users/name/bancal', function(err, json, headers) {
+
+            var dataArray = JSON.parse(json.body);
+            //console.log(JSON.stringify(dataArray[0]));
+
+            assert.equal(dataArray[0].displayName, 'Samuel Bancal', 'Checking displayName value');
+            done();
+        });
+    });
+
     // ToDo: Test searchUserByName
 });
