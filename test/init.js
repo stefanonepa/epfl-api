@@ -1,3 +1,5 @@
-﻿before(function () {
+﻿"use strict";
+
+before(function () {
     require('../server');
 });
