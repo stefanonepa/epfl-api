@@ -7,7 +7,7 @@ var ParameterException = require('../core/exceptions').ParameterException;
         
         function showResult(req, res, results) {
             if (req.query.html != undefined) {
-                res.render('users', { users: results });
+                res.render('users', {users: results});
             } else {
                 res.json(results);
             }

@@ -15,3 +15,8 @@
         div(style="float:right, display:block")
             div Phone :&nbsp;
                 a(href="https://jabberguest.epfl.ch/call/"+accred.phone) !{accred.phone}
+        div(style="float:right, display:block")
+            div Address :&nbsp;
+                br
+                - var add = accred.address.replace(/\$/g, "<br />");
+                span !{add}
