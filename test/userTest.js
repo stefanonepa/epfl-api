@@ -2,7 +2,6 @@
 
 var assert = require('assert');
 var request = require('request');
-var expect = require('chai').expect;
 
 function debug(msg) {
     //console.log(msg);
@@ -11,8 +10,8 @@ function debug(msg) {
 describe('Initial checks', function () {
     it('should respond to GET', function (done) {
        request.get('http://localhost:3000', function (err, res) {
-            expect(res.statusCode).to.equal(200);
-            done();
+           assert.equal(res.statusCode, 200, "Testing that API respond (status 200)");
+           done();
         });
     });
     it('and it should return 200', function (done) {
@@ -71,15 +70,10 @@ describe('API / User', function(){
         });
     });
 
-
-    // Test searchUserByName
+    // Testing searchUserByName
     it('should be able to search user by Name',function(done){
-        request.get('http://localhost:3000/api/public/users/search/banc', function(err, json, headers) {
-
-            var dataArray = JSON.parse(json.body);
-            debug(JSON.stringify(dataArray[0]));
-
-            assert.equal(dataArray[0].displayName, 'Samuel Bancal', 'Checking displayName value');
+        request.get('http://localhost:3000/api/public/users/search/ban', function(err, json, headers) {
+            assert.notEqual(json.body.search('Samuel Bancal'), -1, "Samuel Bancal must be found by searching 'ban' keyword");
             done();
         });
     });

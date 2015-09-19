@@ -4,7 +4,7 @@ var assert = require('assert');
 var request = require('request');
 
 function debug(msg) {
-    console.log(msg);
+    //console.log(msg);
 }
 
 describe('API / Unit', function(){
