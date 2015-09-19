@@ -2,7 +2,10 @@
 
 var assert = require('assert');
 var request = require('request');
-var expect = require('chai').expect;
+
+function debug(msg) {
+    console.log(msg);
+}
 
 describe('API / Unit', function(){
     // Testing getUnitByName
@@ -14,5 +17,11 @@ describe('API / Unit', function(){
         });
     });
 
-    // ToDo: Test searchUnitByName - more than one entry !
+    // Testing searchUnitByName
+    it('should be able to read JSON data',function(done){
+        request.get('http://localhost:3000/api/public/units/search/igm', function(err, json, headers) {
+            assert.notEqual(json.body.search('ou=igm-ge,ou=igm,ou=sti,o=epfl,c=ch'), -1, "IGM-GE must be found by searching 'igm' keyword");
+            done();
+        });
+    });
 });
