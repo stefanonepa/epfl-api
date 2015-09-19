@@ -5,7 +5,7 @@
 
         function showResult(req, res, results) {
             if (req.query.html != undefined) {
-                res.render('units', { units: results });
+                res.render('units', {units: results});
             } else {
                 res.json(results);
             }
