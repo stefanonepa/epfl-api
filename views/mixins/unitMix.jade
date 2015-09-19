@@ -1,0 +1,23 @@
+mixin unitMix(unitData)
+    h1 !{unitData.name}
+    div(style="float:right, display:block")
+        div Acronym :&nbsp;
+            a(href="http://search.epfl.ch/ubrowse.action?acro=:" + unitData.acronym) !{unitData.acronym}
+    div(style="float:right, display:block")
+        div Description :&nbsp;
+            span !{unitData.description}
+    div(style="float:right, display:block")
+        div Address :&nbsp;
+            br
+            - var add = unitData.address.replace(/\$/g, "<br />");
+            !{add}
+
+    // TODO: figure this out
+    //if unitData.hasOwnProperty("membersUid")
+    //    div(style="float:right, display:block")
+    //        div Members :&nbsp;
+    //            ul
+    //                each username in unitData.membersUid
+    //                    li !{username}
+    //else
+    //    p &nbsp;

@@ -1,0 +1,6 @@
+﻿include ./mixins/unitMix.jade
+extends layout
+
+block content
+    each unit in units
+        +unitMix(unit)
