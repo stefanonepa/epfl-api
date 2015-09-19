@@ -1,15 +1,18 @@
 "use strict";
 module.exports = function Unit(ldapUnitArray) {
     var unitModel = {};
-    //TODO: populate the full model
+
     unitModel.cn = ldapUnitArray[0].cn;
     unitModel.dn = ldapUnitArray[0].dn;
     unitModel.acronym = ldapUnitArray[0].ou[0];
-    unitModel.nameEN = ldapUnitArray[0]['ou;lang-en'];
+    unitModel.name = ldapUnitArray[0]['ou;lang-en'];
+    unitModel.description = ldapUnitArray[0]['description;lang-en'];
     unitModel.uniqueIdentifier = ldapUnitArray[0].uniqueIdentifier;
     unitModel.accountingNumber = ldapUnitArray[0].accountingNumber;
     unitModel.gidNumber = ldapUnitArray[0].gidNumber;
-    unitModel.memberUid = ldapUnitArray[0].memberUid;
+    unitModel.membersUid = ldapUnitArray[0].memberUid;
+    unitModel.responsible = ldapUnitArray[0].unitManager;
+    unitModel.address = ldapUnitArray[0].postalAddress;
 
     //All ldap properties
     unitModel.optionalProperties = ldapUnitArray;
@@ -18,7 +21,10 @@ module.exports = function Unit(ldapUnitArray) {
         return {
             cn: unitModel.cn,
             dn: unitModel.dn,
-            acronym: unitModel.acronym
+            name: unitModel.name,
+            description: unitModel.description,
+            acronym: unitModel.acronym,
+            address: unitModel.address
         };
     };
 
