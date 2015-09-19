@@ -6,14 +6,21 @@ module.exports = function User(ldapUserArray) {
     userModel.username = ldapUserArray[0].uid[0];
     userModel.sciper = ldapUserArray[0].uniqueIdentifier;
     userModel.email = ldapUserArray[0].mail;
+    userModel.title = ldapUserArray[0].personalTitle;
     userModel.accreds = Array();
     userModel.memberOf = Array();
 
-
     if (ldapUserArray[0].memberOf !== undefined) {
-        ldapUserArray[0].memberOf.forEach(function (groupName, index, groupArray) {
-            userModel.memberOf.push(groupName);
-        });
+
+        // Note: if only one group, typeof string
+        //       if groups, typeof object.
+        //       Username banla have only one group
+
+        if (typeof ldapUserArray[0].memberOf == 'object') {
+            ldapUserArray[0].memberOf.forEach(function (groupName, index, groupArray) {
+                userModel.memberOf.push(groupName);
+            });
+        } else userModel.memberOf = ldapUserArray[0].memberOf;
     }
 
     ldapUserArray.forEach(function (userEntry, index, array) {
@@ -21,7 +28,7 @@ module.exports = function User(ldapUserArray) {
         userModel.accreds.push(
             {
                 unitAcronym: userEntry.ou[0],
-                unitNameEN: userEntry['ou;lang-en'],
+                unitName: userEntry['ou;lang-en'],
                 phone: userEntry.telephoneNumber,
                 office: userEntry.roomNumber,
                 address: userEntry.postalAddress ? userEntry.postalAddress : '',
