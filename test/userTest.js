@@ -72,8 +72,18 @@ describe('API / User', function(){
 
     // Testing searchUserByName
     it('should be able to search user by Name',function(done){
+        this.timeout(5000);
         request.get('http://localhost:3000/api/public/users/search/ban', function(err, json, headers) {
             assert.notEqual(json.body.search('Samuel Bancal'), -1, "Samuel Bancal must be found by searching 'ban' keyword");
+            done();
+        });
+    });
+
+    // Testing searchUserByPhone
+    it('should be able to search user by Phone',function(done){
+        request.get('http://localhost:3000/api/public/users/phone/35455', function(err, json, headers) {
+            assert.equal(JSON.parse(json.body)[0].sciper, '169419', 'Checking that sciper is correct to this phone value');
+            assert.equal(JSON.parse(json.body)[0].accreds[0].phone, '+41 21 6935455', 'Checking that phone number is present in the first accred');
             done();
         });
     });

@@ -39,6 +39,11 @@ var ParameterException = require('../core/exceptions').ParameterException;
             req.dataContext.users.searchUserByName(req, res, showResult);
         });
 
+        app.get("/phone/:phone", keyDataFilter, function(req, res) {
+            req.phone = req.params.phone;
+            req.dataContext.users.searchUserByPhone(req, res, showResult);
+        });
+
         /*app.post('/', keyDataFilter, function (req, res) {
             req.sciper = req.body.sciper;
             getLdapInfoAndSendIt(req, res);
