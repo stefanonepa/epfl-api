@@ -24,7 +24,10 @@
     - Done thanks to [mocha](https://github.com/mochajs/mocha/wiki)
 - [ ] Conventions
     - maybe http://jshint.com/ can do a part of the job
-    - http://stackoverflow.com/questions/5495984/coding-style-guide-for-node-js-apps which recommends https://github.com/felixge/node-style-guide
+    - https://github.com/felixge/node-style-guide
+    - https://github.com/airbnb/javascript
+    - https://github.com/rwaldron/idiomatic.js
+    - http://google.github.io/styleguide/javascriptguide.xml
 - [ ] Normalize or standardize models to send back
 - [ ] Manage cycle of life of api by a version management
 - [ ] Manage a subscription to services to allow access only on granted request (by unique GID in the url)
