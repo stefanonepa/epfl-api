@@ -25,6 +25,11 @@ module.exports = function (client) {
         executeQuery(req, res, next);
     };
     
+    usersRepo.searchUserByUnitAcronym = function (req, res, next) {
+        req.ldapQuery = '(&(objectClass=posixAccount)(|(ou=' + req.unitAcronym + ')))';
+        executeQuery(req, res, next);
+    };
+
     var executeQuery = function (req, res, next) {
         var opts = {
             filter: req.ldapQuery,

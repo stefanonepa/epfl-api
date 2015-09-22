@@ -20,7 +20,7 @@ describe('API / Unit', function(){
     // Testing searchUnitByName
     it('should be able to read JSON data',function(done){
         request.get('http://localhost:3000/api/public/units/search/igm', function(err, json, headers) {
-            assert.notEqual(json.body.search('ou=igm-ge,ou=igm,ou=sti,o=epfl,c=ch'), -1, 'IGM-GE must be found by searching 'igm' keyword');
+            assert.notEqual(json.body.search('ou=igm-ge,ou=igm,ou=sti,o=epfl,c=ch'), -1, 'IGM-GE must be found by searching "igm" keyword');
             done();
         });
     });
@@ -28,7 +28,7 @@ describe('API / Unit', function(){
     // Testing searchUnitByName
     it('should be able to read JSON data', function (done) {
         request.get('http://localhost:3000/api/public/units/id/0184', function (err, json, headers) {
-            assert.notEqual(json.body.search('ENAC-IT'), -1, 'ENAC-IT must be found by searching '0184' id');
+            assert.notEqual(json.body.search('ENAC-IT'), -1, 'ENAC-IT must be found by searching "0184" id');
             done();
         });
     });

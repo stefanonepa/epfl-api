@@ -6,11 +6,11 @@ module.exports = function ErrorHandler(err, req, res, next) {
     if (err instanceof ParameterException) {
         res.json({ errorType: 'Parameter error', message: err.message, parameterName: err.parameterName });
     }
-
+    
     if (err.status === 403) {
         res.status(403);
         res.send('Forbidden');
-    }else {
+    }else if (err.status === 500){
         res.status(500);
         res.send('Error');
         //res.render('error', { error: err });

@@ -45,5 +45,10 @@ var ParameterException = require('../core/exceptions').ParameterException;
             req.phone = req.params.phone;
             req.dataContext.users.searchUserByPhone(req, res, showResult);
         });
+
+        app.get('/unit/:unitAcronym', keyDataFilter, function (req, res) {
+            req.unitAcronym = req.params.unitAcronym;
+            req.dataContext.users.searchUserByUnitAcronym(req, res, showResult);
+        });
     };
 })(module.exports);
