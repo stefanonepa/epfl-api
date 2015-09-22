@@ -4,90 +4,62 @@ module.exports = function (client) {
 
     var unitsRepo = {};
     unitsRepo.client = client;
+    
+    var executeQuery = function (req, res, next) {
+        var opts = {
+            filter: req.ldapQuery,
+            scope: 'sub'
+        };
+        
+        var groupedUnit = {};
+        
+        client.search(client.options.searchBase, opts, function (err, ldapRes) {
+            ldapRes.on('searchEntry', function (entry) {
+                if (typeof entry.json != 'undefined') {
+                    var unitIdentifier = entry.object.uniqueIdentifier;
+                    if (groupedUnit[unitIdentifier] === undefined) {
+                        groupedUnit[unitIdentifier] = Array();
+                    }
+                    groupedUnit[unitIdentifier].push(entry.object);
+                } else {
+                    next(req, res, groupedUnit);
+                }
+                //console.log('entry: ' + JSON.stringify(entry.object));
+            });
+            ldapRes.on('searchReference', function (referral) {
+                //console.log('referral: ' + referral.uris.join());
+            });
+            ldapRes.on('error', function (err) {
+                console.error('error: ' + err.message);
+                
+                next(req, res, groupedUnit);
+            });
+            ldapRes.on('timeout', function (err) {
+                console.error('error: ' + err.message);
+            });
+            ldapRes.on('end', function () {
+                var users = Array();
+                
+                for (var unitEntry in groupedUnit) {
+                    if (groupedUnit.hasOwnProperty(unitEntry)) {
+                        users.push(client.options.capability.view(unitFactory(groupedUnit[unitEntry])));
+                    }
+                }
+                next(req, res, users);
+                //console.log('status: ' + result.status);
+            });
+        });
+    }
 
     // TODO: get unit by id (note id = fund)
     unitsRepo.getUnitByName = function (req, res, next) {
-        var opts = { // ldapsearch -h ldap.epfl.ch -b 'o=epfl,c=ch' -LLL -x '(&(objectclass=organizationalunit))'
-            filter: '(&(objectClass=organizationalunit)(|(ou=' + req.unit + ')))',
-            scope: 'sub'
-        };
-
-        var groupedUnit = Array();
-
-        client.search(client.options.searchBase, opts, function (err, ldapRes) {
-            ldapRes.on('searchEntry', function (entry) {
-                if (typeof entry.json != 'undefined') {
-                    if (groupedUnit[entry.object.uniqueIdentifier] === undefined) {
-                        groupedUnit[entry.object.uniqueIdentifier] = Array();
-                    }
-                    groupedUnit[entry.object.uniqueIdentifier].push(entry.object);
-                } else {
-                    next(req, res, []);
-                }
-                //console.log('entry: ' + JSON.stringify(entry.object));
-            });
-            ldapRes.on('searchReference', function (referral) {
-                //console.log('referral: ' + referral.uris.join());
-            });
-            ldapRes.on('error', function (err) {
-                console.error('error: ' + err.message);
-
-                next(req, res, []);
-            });
-            ldapRes.on('timeout', function (err) {
-                console.error('error: ' + err.message);
-            });
-            ldapRes.on('end', function () {
-                var units = Array();
-                groupedUnit.forEach(function(unitEntries, index, array) {
-                    units.push(client.options.capability.view(unitFactory(unitEntries)));
-                });
-                next(req, res, units);
-                //console.log('status: ' + result.status);
-            });
-        });
+        req.ldapQuery = '(&(objectClass=organizationalunit)(|(ou=' + req.unit + ')))';
+        executeQuery(req, res, next);
     };
 
     unitsRepo.searchUnitByName = function (req, res, next) {
-        var opts = { // ldapsearch -h ldap.epfl.ch -b 'o=epfl,c=ch' -LLL -x '(&(objectclass=organizationalunit))'
-            filter: '(&(objectClass=organizationalunit)(|(ou=' + req.unit + '*)))',
-            scope: 'sub'
-        };
-
-        var groupedUnit = Array();
-
-        client.search(client.options.searchBase, opts, function (err, ldapRes) {
-            ldapRes.on('searchEntry', function (entry) {
-                if (typeof entry.json != 'undefined') {
-                    if (groupedUnit[entry.object.uniqueIdentifier] === undefined) {
-                        groupedUnit[entry.object.uniqueIdentifier] = Array();
-                    }
-                    groupedUnit[entry.object.uniqueIdentifier].push(entry.object);
-                } else {
-                    next(req, res, []);
-                }
-                //console.log('entry: ' + JSON.stringify(entry.object));
-            });
-            ldapRes.on('searchReference', function (referral) {
-                //console.log('referral: ' + referral.uris.join());
-            });
-            ldapRes.on('error', function (err) {
-                console.error('error: ' + err.message);
-
-                next(req, res, []);
-            });
-            ldapRes.on('timeout', function (err) {
-                console.error('error: ' + err.message);
-            });
-            ldapRes.on('end', function () {
-                var units = Array();
-                groupedUnit.forEach(function(unitEntries, index, array) {
-                    units.push(client.options.capability.view(unitFactory(unitEntries)));
-                });
-                next(req, res, units);
-                //console.log('status: ' + result.status);
-            });
-        });
+        req.ldapQuery = '(&(objectClass=organizationalunit)(|(ou=' + req.unit + '*)))';
+        executeQuery(req, res, next);
     };
 
     return unitsRepo;

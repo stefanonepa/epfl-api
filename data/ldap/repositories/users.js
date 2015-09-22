@@ -17,7 +17,7 @@ module.exports = function (client) {
         client.search(client.options.searchBase, opts, function (err, ldapRes) {
             ldapRes.on('searchEntry', function (entry) {
                 if (typeof entry.json != 'undefined') {
-                    var userIdentifier = entry.object.uniqueIdentifier + 'i';
+                    var userIdentifier = entry.object.uniqueIdentifier;
                     if (groupedUser[userIdentifier] === undefined) {
                         groupedUser[userIdentifier] = Array();
                     }
