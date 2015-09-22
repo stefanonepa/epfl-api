@@ -1,9 +1,9 @@
 ﻿'use strict';
-module.exports = function (client) {
+module.exports = function (context) {
 
     var userFactory = require('../models/user');
     var usersRepo = {};
-    usersRepo.client = client;
+    var client = context.client;
 
     usersRepo.getUserBySciper = function (req, res, next) {
         req.ldapQuery = '(&(objectClass=posixAccount)(|(uniqueIdentifier=' + req.sciper + ')))';

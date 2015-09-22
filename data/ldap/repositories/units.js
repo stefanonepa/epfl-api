@@ -1,9 +1,9 @@
 'use strict';
-module.exports = function (client) {
+module.exports = function (context) {
     var unitFactory = require('../models/unit');
 
     var unitsRepo = {};
-    unitsRepo.client = client;
+    var client = context.client;
 
     unitsRepo.getUnitById = function (req, res, next) {
         req.ldapQuery = '(&(objectClass=organizationalunit)(|(accountingNumber=' + req.accountingNumber + ')))';
