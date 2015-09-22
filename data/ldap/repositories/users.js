@@ -4,9 +4,28 @@ module.exports = function (client) {
     var userFactory = require('../models/user');
     var usersRepo = {};
     usersRepo.client = client;
+
+    usersRepo.getUserBySciper = function (req, res, next) {
+        req.ldapQuery = '(&(objectClass=posixAccount)(|(uniqueIdentifier=' + req.sciper + ')))';
+        executeQuery(req, res, next);
+    };
     
-    var executeQuery= function (req, res, next)
-    {
+    usersRepo.getUserByName = function (req, res, next) {
+        req.ldapQuery = '(&(objectClass=posixAccount)(|(cn=' + req.name + ')))';
+        executeQuery(req, res, next);
+    };
+
+    usersRepo.searchUserByName = function (req, res, next) {
+        req.ldapQuery = '(&(objectClass=posixAccount)(|(cn=' + req.name + '*)))';
+        executeQuery(req, res, next);
+    };
+
+    usersRepo.searchUserByPhone = function (req, res, next) {
+        req.ldapQuery = '(&(objectClass=posixAccount)(|(telephoneNumber=*' + req.phone + '*)))';
+        executeQuery(req, res, next);
+    };
+    
+    var executeQuery = function (req, res, next) {
         var opts = {
             filter: req.ldapQuery,
             scope: 'sub'
@@ -52,24 +71,5 @@ module.exports = function (client) {
         });
     }
 
-    usersRepo.getUserBySciper = function (req, res, next) {
-        req.ldapQuery = '(&(objectClass=posixAccount)(|(uniqueIdentifier=' + req.sciper + ')))';
-        executeQuery(req, res, next);
-    };
-    
-    usersRepo.getUserByName = function (req, res, next) {
-        req.ldapQuery = '(&(objectClass=posixAccount)(|(cn=' + req.name + ')))';
-        executeQuery(req, res, next);
-    };
-
-    usersRepo.searchUserByName = function (req, res, next) {
-        req.ldapQuery = '(&(objectClass=posixAccount)(|(cn=' + req.name + '*)))';
-        executeQuery(req, res, next);
-    };
-
-    usersRepo.searchUserByPhone = function (req, res, next) {
-        req.ldapQuery = '(&(objectClass=posixAccount)(|(telephoneNumber=*' + req.phone + '*)))';
-        executeQuery(req, res, next);
-    };
     return usersRepo;
 };

@@ -24,4 +24,12 @@ describe('API / Unit', function(){
             done();
         });
     });
+
+    // Testing searchUnitByName
+    it('should be able to read JSON data', function (done) {
+        request.get('http://localhost:3000/api/public/units/id/0184', function (err, json, headers) {
+            assert.notEqual(json.body.search('ENAC-IT'), -1, "ENAC-IT must be found by searching '0184' id");
+            done();
+        });
+    });
 });

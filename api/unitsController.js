@@ -10,6 +10,12 @@
                 res.json(results);
             }
         }
+        
+        app.get("/id/:id", keyDataFilter, function (req, res) {
+            console.log("unit: " + req.params.id);
+            req.accountingNumber = req.params.id;
+            req.dataContext.units.getUnitById(req, res, showResult);
+        });
 
         app.get("/name/:unitName", keyDataFilter, function(req, res) {
             console.log("unit: "+req.params.unitName);

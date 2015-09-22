@@ -4,6 +4,21 @@ module.exports = function (client) {
 
     var unitsRepo = {};
     unitsRepo.client = client;
+
+    unitsRepo.getUnitById = function (req, res, next) {
+        req.ldapQuery = '(&(objectClass=organizationalunit)(|(accountingNumber=' + req.accountingNumber + ')))';
+        executeQuery(req, res, next);
+    };
+
+    unitsRepo.getUnitByName = function (req, res, next) {
+        req.ldapQuery = '(&(objectClass=organizationalunit)(|(ou=' + req.unit + ')))';
+        executeQuery(req, res, next);
+    };
+
+    unitsRepo.searchUnitByName = function (req, res, next) {
+        req.ldapQuery = '(&(objectClass=organizationalunit)(|(ou=' + req.unit + '*)))';
+        executeQuery(req, res, next);
+    };
     
     var executeQuery = function (req, res, next) {
         var opts = {
@@ -38,29 +53,18 @@ module.exports = function (client) {
                 console.error('error: ' + err.message);
             });
             ldapRes.on('end', function () {
-                var users = Array();
+                var units = Array();
                 
                 for (var unitEntry in groupedUnit) {
                     if (groupedUnit.hasOwnProperty(unitEntry)) {
-                        users.push(client.options.capability.view(unitFactory(groupedUnit[unitEntry])));
+                        units.push(client.options.capability.view(unitFactory(groupedUnit[unitEntry])));
                     }
                 }
-                next(req, res, users);
+                next(req, res, units);
                 //console.log('status: ' + result.status);
             });
         });
     }
-
-    // TODO: get unit by id (note id = fund)
-    unitsRepo.getUnitByName = function (req, res, next) {
-        req.ldapQuery = '(&(objectClass=organizationalunit)(|(ou=' + req.unit + ')))';
-        executeQuery(req, res, next);
-    };
-
-    unitsRepo.searchUnitByName = function (req, res, next) {
-        req.ldapQuery = '(&(objectClass=organizationalunit)(|(ou=' + req.unit + '*)))';
-        executeQuery(req, res, next);
-    };
 
     return unitsRepo;
 };
