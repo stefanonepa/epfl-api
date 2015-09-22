@@ -1,4 +1,4 @@
-﻿"use strict";
+﻿'use strict';
 
 var capabilities = {
     'internal': {
@@ -41,6 +41,6 @@ module.exports = function keyDataFilter(req, res, next) {
         return;
     }
     
-    req.dataContext = require("../../data/ldap/context")(cap);
+    req.dataContext = require('../../data/ldap/context')(cap);
     next();
 }

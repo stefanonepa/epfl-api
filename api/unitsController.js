@@ -1,5 +1,7 @@
-"use strict";
+'use strict';
 (function (unitsController) {
+    var ParameterException = require('../core/exceptions').ParameterException;
+
     unitsController.init = function (app) {
         var keyDataFilter = require('../core/security/keyDataFilter');
 
@@ -11,20 +13,26 @@
             }
         }
         
-        app.get("/id/:id", keyDataFilter, function (req, res) {
-            console.log("unit: " + req.params.id);
+        app.get('/id/:id', keyDataFilter, function (req, res) {
+            console.log('unit: ' + req.params.id);
             req.accountingNumber = req.params.id;
             req.dataContext.units.getUnitById(req, res, showResult);
         });
 
-        app.get("/name/:unitName", keyDataFilter, function(req, res) {
-            console.log("unit: "+req.params.unitName);
-            req.unit = req.params.unitName;
-            req.dataContext.units.getUnitByName(req, res, showResult);
+        app.get('/name/:unitName', keyDataFilter, function(req, res) {
+            console.log('unit: ' + req.params.unitName);
+
+            if (req.dataContext.validator.isUnitAcronymValid(req.params.unitName)) {
+                req.unit = req.params.unitName;
+                req.dataContext.units.getUnitByName(req, res, showResult);
+            } else {
+                throw new ParameterException({ message: 'Unitname not valid!', parameterName: 'unitname' });
+            }
+            
         });
 
-        app.get("/search/:unitName", keyDataFilter, function(req, res) {
-            console.log("unit: "+req.params.unitName);
+        app.get('/search/:unitName', keyDataFilter, function(req, res) {
+            console.log('unit: '+req.params.unitName);
             req.unit = req.params.unitName;
             req.dataContext.units.searchUnitByName(req, res, showResult);
         });

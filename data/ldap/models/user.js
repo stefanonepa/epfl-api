@@ -1,4 +1,4 @@
-﻿"use strict";
+﻿'use strict';
 module.exports = function User(ldapUserArray) {
     var userModel = {};
     //TODO: populate the full model

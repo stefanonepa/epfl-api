@@ -1,4 +1,4 @@
-﻿"use strict";
+﻿'use strict';
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -24,7 +24,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 //Map the routes
 api.init(app);
 
-app.get("/",  function (req, res) {
+app.get('/',  function (req, res) {
     res.render('homepage');
 });
 

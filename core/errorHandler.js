@@ -1,20 +1,22 @@
-﻿"use strict";
+﻿'use strict';
 var exceptions = require('./exceptions');
 var ParameterException = exceptions.ParameterException;
 
 module.exports = function ErrorHandler(err, req, res, next) {
     if (err instanceof ParameterException) {
-        res.json({errorType: "Parameter error", message: err.message, parameterName: err.parameterName});
+        res.json({ errorType: 'Parameter error', message: err.message, parameterName: err.parameterName });
     }
-    if (err.status === null ) {
-        res.status(500);
-        res.render('error', { error: err });
-        console.log(err);
-    }else if (err.status === 403) {
+
+    if (err.status === 403) {
         res.status(403);
         res.send('Forbidden');
+    }else {
+        res.status(500);
+        res.send('Error');
+        //res.render('error', { error: err });
+        console.log(err);
     }
-    //next(err, req, res);
+        //next(err, req, res);
 };
 
 

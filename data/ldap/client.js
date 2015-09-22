@@ -1,4 +1,4 @@
-﻿"use strict";
+﻿'use strict';
 module.exports = function ldapClient(options) {
     var ldap = require('ldapjs');
     var client = ldap.createClient({

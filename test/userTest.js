@@ -1,4 +1,4 @@
-﻿"use strict";
+﻿'use strict';
 
 var assert = require('assert');
 var request = require('request');
@@ -10,13 +10,13 @@ function debug(msg) {
 describe('Initial checks', function () {
     it('should respond to GET', function (done) {
        request.get('http://localhost:3000', function (err, res) {
-           assert.equal(res.statusCode, 200, "Testing that API respond (status 200)");
+           assert.equal(res.statusCode, 200, 'Testing that API respond (status 200)');
            done();
         });
     });
     it('and it should return 200', function (done) {
         request.get('http://localhost:3000/api/public/users/sciper/169419', function (err, res, body) {
-            assert.ok(res.statusCode===200, "Request status 200");
+            assert.ok(res.statusCode===200, 'Request status 200');
             done();
         });
     });
@@ -41,7 +41,7 @@ describe('API / User', function(){
         request.get('http://localhost:3000/api/public/users/sciper/Z18171', function(err, json, headers) {
             debug(json.body);
             debug(JSON.parse(json.body));
-            assert(JSON.parse(json.body).errorType.toLowerCase().indexOf("parameter") >= 0);
+            assert(JSON.parse(json.body).errorType.toLowerCase().indexOf('parameter') >= 0);
             done();
         });
     });
@@ -74,7 +74,7 @@ describe('API / User', function(){
     it('should be able to search user by Name',function(done){
         this.timeout(5000);
         request.get('http://localhost:3000/api/public/users/search/ban', function(err, json, headers) {
-            assert.notEqual(json.body.search('Samuel Bancal'), -1, "Samuel Bancal must be found by searching 'ban' keyword");
+            assert.notEqual(json.body.search('Samuel Bancal'), -1, 'Samuel Bancal must be found by searching 'ban' keyword');
             done();
         });
     });

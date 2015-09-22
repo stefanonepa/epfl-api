@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 module.exports = function (client) {
     var unitFactory = require('../models/unit');
 
