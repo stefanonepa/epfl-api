@@ -38,4 +38,4 @@
 # Notes
 It should be used in the intranet and it shouldn't be published outside DIODE
 
-The `[public]` parameter in the url has to be replaced by a personal GUID managed in `accessValidator.js`
+The `[public]` parameter in the url has to be replaced by a personal GUID managed in `inputValidators.js`
