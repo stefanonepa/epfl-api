@@ -24,6 +24,7 @@ app.use(session({ secret: 'quoh8ukaechooBiong2eexeewa6pheuquengeiyedailae9Eethoh
     saveUninitialized: true }));
 
 require('./core/security/tequilaConfig')(app);
+keyContext.loadKeys();
 app.keyContext = keyContext;
 
 // set the public static resource folder

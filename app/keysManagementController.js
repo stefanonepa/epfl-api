@@ -13,14 +13,14 @@
 
         app.get('/add', app.tequilaStrategy.ensureAuthenticated, function (req, res) {
             keysContext.keys.addKeysForUser(req, res,function(keys){
-                res.render('keysManagement/list', { keys: keys });
+                res.redirect('./');
             })
         });
 
         app.get('/delete/:apiKeyToDelete', app.tequilaStrategy.ensureAuthenticated, function (req, res) {
             req.apiKeyToDelete = req.params.apiKeyToDelete;
             keysContext.keys.deleteKeysForUser(req, res,function(keys){
-                res.render('keysManagement/list', { keys: keys });
+                res.redirect('../');
             })
         });
     };

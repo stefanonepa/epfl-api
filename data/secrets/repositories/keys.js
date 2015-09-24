@@ -1,28 +1,59 @@
 ﻿'use strict';
-module.exports = function keysRepository(apiKeys) {
+module.exports = function keysRepository(keysContext) {
     var keysRepo = {};
 
     keysRepo.getKeysForUser = function (req, res, next) {
-        console.log(req.user.tequila.uniqueid);
-        var clientKeys = apiKeys[req.user.tequila.uniqueid] || [];
-        apiKeys[req.user.uniqueid] = clientKeys; //TODO: Verify if reference
+        var clientKeys = [];
+        if (keysContext.usersKeys[req.user.tequila.uniqueid] == undefined) {
+            keysContext.saveKeys(req.user.tequila.uniqueid, clientKeys, next);
+        } else {
+            clientKeys = keysContext.usersKeys[req.user.tequila.uniqueid];
+        }
+
         next(clientKeys);
     };
 
     keysRepo.addKeysForUser = function (req, res, next) {
         var uuid = require('node-uuid');
-        var clientKeys = apiKeys[req.user.tequila.uniqueid] || [];
+        var clientKeys = keysContext.usersKeys[req.user.tequila.uniqueid] || [];
         clientKeys.push(uuid.v4());
-        apiKeys[req.user.uniqueid] = clientKeys; //TODO: Verify if reference
-        next(clientKeys);
+        keysContext.saveKeys(req.user.tequila.uniqueid, clientKeys, next);
     };
 
     keysRepo.deleteKeysForUser = function (req, res, next) {
-        var clientKeys = apiKeys[req.user.tequila.uniqueid] || [];
-        delete clientKeys[req.apiKeyToDelete];
-        apiKeys[req.user.uniqueid] = clientKeys; //TODO: Verify if reference
-        next(clientKeys);
+        var clientKeys = keysContext.usersKeys[req.user.tequila.uniqueid].filter(function (i) {
+            return i != req.apiKeyToDelete;
+        });
+        
+        keysContext.saveKeys(req.user.tequila.uniqueid, clientKeys, next);
     };
     
+    keysRepo.keyIsValid = function (key) {
+        //var keys = Object.keys(keysContext.usersKeys);
+        //var len = keys.length;
+        //var i = 0;
+        //var prop;
+
+        //while (i < len) {
+        //    prop = keys[i];
+        //    data[prop].filter(function (currentKey) {
+        //        if (currentKey == key) {
+        //            return true;
+        //        }
+        //    });
+        //    i += 1;
+        //}
+        
+        for (userKeys in keysContext.usersKeys) {
+            for (userKey in userKeys) {
+                if (userKey == key) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    };
+
     return keysRepo;
 };

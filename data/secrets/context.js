@@ -1,8 +1,25 @@
 ﻿'use strict';
 module.exports = function secretsContext() {
-    var userKeys = {};
+    var fs = require('fs');
+    var filePath = './data/secrets/dataStore.json';
     var context = {};
-    context.keys = require('./repositories/keys')(userKeys);
-    //context.users = require('./repositories/clients')(userKeys);
+    context.usersKeys = {};
+
+    context.saveKeys = function saveKeysInFile(clientId, clientKeys, next) {
+        context.usersKeys[clientId] = clientKeys;
+        fs.writeFile(filePath, JSON.stringify(context.usersKeys), 'utf8', next(context.usersKeys));
+    };
+    
+    context.loadKeys = function loadFromFile(){
+        fs.readFile(filePath, 'utf8', function (err, data) {
+            if (err) {
+                context.usersKeys = {};
+            } else {
+                context.usersKeys = JSON.parse(data);
+            }
+        });
+    };
+
+    context.keys = require('./repositories/keys')(context);
     return context;
 };
