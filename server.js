@@ -1,5 +1,6 @@
 ﻿'use strict';
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var morgan = require('morgan');
@@ -18,8 +19,10 @@ app.set('view engine', 'jade');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({ secret: 'quoh8ukaechooBiong2eexeewa6pheuquengeiyedailae9EethohmeuDiecie5ahb2cat', resave: true,
+    saveUninitialized: true }));
 
-require('./core/security/TequilaConfig')(app);
+require('./core/security/tequilaConfig')(app);
 
 // set the public static resource folder
 app.use(express.static(__dirname + '/public'));
