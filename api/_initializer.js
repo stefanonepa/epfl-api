@@ -8,6 +8,7 @@
                 var name = file.replace('.js', '');
                 var currentController = require('./' + name);
                 var currentRouter = require('express')();
+                currentRouter.keyContext = app.keyContext;
 
                 currentController.init(currentRouter);
                 app.use('/api/:key/' + name.replace('Controller', ''), currentRouter);

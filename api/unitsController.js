@@ -1,7 +1,7 @@
 'use strict';
 (function (unitsController) {
     unitsController.init = function (app) {
-        var keyDataFilter = require('../core/security/keyDataFilter');
+        var keyDataFilter = require('../core/security/keyDataFilter')(app);
         var ParameterException = require('../core/exceptions').ParameterException;
 
         function showResult(req, res, results) {
