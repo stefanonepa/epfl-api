@@ -1,4 +1,5 @@
 ﻿'use strict';
+var ForbiddenException = require('../exceptions').ForbiddenException;
 
 var capabilities = {
     'internal': {
@@ -16,12 +17,6 @@ function isInternal(req){
     return req.key === 'internal';
 }
 
-function error403(req) {
-    var err = new Error();
-    err.status = 403;
-    throw err;
-}
-
 module.exports = function keyDataFilter(req, res, next) {
     var cap;
     if (req.key === 'public') {
@@ -31,13 +26,13 @@ module.exports = function keyDataFilter(req, res, next) {
     }
 
     if (!cap) {
-        error403(req);
+        throw new ForbiddenException();
         return;
     }
 
     if (! cap.reqIsValid(req)) {
         // This query is not allowed from this client
-        error403(req);
+        throw new ForbiddenException();
         return;
     }
     
