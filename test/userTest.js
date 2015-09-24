@@ -37,11 +37,18 @@ describe('API / User', function(){
     });
 
     // Test guest sciper
-    it('handle errors in query parameters',function(done){
-        request.get('http://localhost:3000/api/public/users/sciper/Z18171', function(err, json, headers) {
-            debug(json.body);
-            debug(JSON.parse(json.body));
-            assert(JSON.parse(json.body).errorType.toLowerCase().indexOf('parameter') >= 0);
+    it('handle errors in query parameters', function (done){
+        var options = {
+            url: 'http://localhost:3000/api/public/users/sciper/Z18171',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        };
+
+        request.get(options, function (err, res, body) {
+            debug(JSON.parse(body));
+            debug(res);
+            assert(JSON.parse(body).message.indexOf('Sciper not valid!') >= 0);
             done();
         });
     });
