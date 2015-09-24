@@ -74,7 +74,7 @@ module.exports = function (context) {
                 //console.log('status: ' + result.status);
             });
         });
-    }
+    };
 
     return usersRepo;
 };

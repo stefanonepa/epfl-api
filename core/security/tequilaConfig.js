@@ -23,7 +23,7 @@ module.exports = function tequilaConfig(app) {
 
     var tequila = new TequilaStrategy({
         service: "EPFL ldap API",
-        request: ["displayname"]
+        request: ["displayname,uniqueid"]
         // require: "group=openstack-sti",  // Uncomment and use a group you are a member of.
     }, myVerify);
     passport.use(tequila);

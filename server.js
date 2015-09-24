@@ -9,6 +9,7 @@ var errorHandler = require('./core/errorHandler');
 var app = express();
 var api = require('./api/_initializer.js');
 var webApp = require('./app/_initializer.js');
+var keyContext = require('./data/secrets/context')();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,6 +24,7 @@ app.use(session({ secret: 'quoh8ukaechooBiong2eexeewa6pheuquengeiyedailae9Eethoh
     saveUninitialized: true }));
 
 require('./core/security/tequilaConfig')(app);
+app.keyContext = keyContext;
 
 // set the public static resource folder
 app.use(express.static(__dirname + '/public'));

@@ -1,6 +1,9 @@
 ﻿extends ../layout
 
 block content
+    a(href="/app/keysManagement/add") ADD
+
     ul
       each key in keys
         li= key
+            a(href="/app/keysManagement/delete/#{key}") DEL

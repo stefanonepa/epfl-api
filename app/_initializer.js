@@ -9,6 +9,7 @@
                 var currentController = require('./' + name);
                 var currentRouter = require('express')();
                 currentRouter.tequilaStrategy = app.tequilaStrategy;
+                currentRouter.keyContext = app.keyContext;
 
                 currentController.init(currentRouter);
                 app.use('/app/' + name.replace('Controller', ''), currentRouter);
