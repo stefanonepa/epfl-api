@@ -28,4 +28,6 @@ module.exports = function ErrorHandler(err, req, res, next) {
     } else {
         res.render(viewName, { error: errorObject });
     }
+    console.log(err);
+    console.log(err.stack);
 };

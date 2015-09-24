@@ -16,7 +16,11 @@
     "express-session": "^1.11.3",
     "jade": "~1.6.0",
     "ldapjs": "^0.7.1",
+    "method-override": "^2.3.5",
     "morgan": "^1.6.1",
+    "passport": "^0.3.0",
+    "passport-strategy": "^1.0.0",
+    "passport-tequila": "^0.1.5",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {

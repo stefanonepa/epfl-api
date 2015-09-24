@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var errorHandler = require('./core/errorHandler');
 var app = express();
 var api = require('./api/_initializer.js');
+var webApp = require('./app/_initializer.js');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -17,12 +19,15 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+require('./core/security/TequilaConfig')(app);
+
 // set the public static resource folder
 app.use(express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
 //Map the routes
 api.init(app);
+webApp.init(app);
 
 app.get('/',  function (req, res) {
     res.render('homepage');

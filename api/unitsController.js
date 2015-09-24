@@ -1,9 +1,8 @@
 'use strict';
 (function (unitsController) {
-    var ParameterException = require('../core/exceptions').ParameterException;
-
     unitsController.init = function (app) {
         var keyDataFilter = require('../core/security/keyDataFilter');
+        var ParameterException = require('../core/exceptions').ParameterException;
 
         function showResult(req, res, results) {
             if (req.query.html != undefined) {
