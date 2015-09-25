@@ -8,9 +8,9 @@ module.exports = function keysRepository(keysContext) {
             keysContext.saveKeys(req.user.tequila.uniqueid, clientKeys, next);
         } else {
             clientKeys = keysContext.usersKeys[req.user.tequila.uniqueid];
+            next(clientKeys);
         }
 
-        next(clientKeys);
     };
 
     keysRepo.addKeysForUser = function (req, res, next) {

@@ -39,6 +39,10 @@ app.get('/',  function (req, res) {
     res.render('homepage');
 });
 
+app.get('/api/pomme', function (req, res) {
+    res.render('pomme');
+})
+
 //TODO: Enable and Refine the errorHanlder
 app.use(errorHandler);
 
