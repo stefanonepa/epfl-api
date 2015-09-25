@@ -2,8 +2,8 @@
 
 block content
     a(href="/app/keysManagement/add") ADD
-
-    ul
-      each key in keys
-        li= key
-            a(href="/app/keysManagement/delete/#{key}") DEL
+    if keys.length > 0
+        ul
+          each key in keys
+            li= key
+                a(href="/app/keysManagement/delete/#{key}") DEL
