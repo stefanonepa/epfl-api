@@ -9,6 +9,7 @@ module.exports = function User(ldapUserArray) {
     userModel.title = ldapUserArray[0].personalTitle;
     userModel.accreds = Array();
     userModel.memberOf = Array();
+    userModel.photoUrl = 'http://people.epfl.ch/cgi-bin/people/getPhoto?id=' + userModel.sciper;
 
     if (ldapUserArray[0].memberOf !== undefined) {
 

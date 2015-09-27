@@ -10,7 +10,6 @@ module.exports = function keysRepository(keysContext) {
             clientKeys = keysContext.usersKeys[req.user.tequila.uniqueid];
             next(clientKeys);
         }
-
     };
 
     keysRepo.addKeysForUser = function (req, res, next) {

@@ -1,5 +1,9 @@
 ﻿mixin userMix(userData)
     h1 !{userData.displayName}
+    if userData.photoUrl
+        div(style="float:right, display:block")
+            div Avatar :&nbsp;
+                img(src="#{userData.photoUrl}", alt="#{userData.displayName}", style="height: 100px")
     div(style="float:right, display:block")
         div Email :&nbsp;
             a(href="mailto:"+userData.email) !{userData.email}
