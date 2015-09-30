@@ -1,6 +1,6 @@
 ﻿'use strict';
 module.exports = function ldapContext(capability) {
-    var options = require('./options')(capability, null);
+    var options = require('./options')(capability);
     
     var context = {};
     context.client = require('./client')(options);

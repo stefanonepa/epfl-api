@@ -19,6 +19,10 @@
 - GET http://localhost:3000/api/public/units/search/sti
 
 # ToDo
+- [ ] Split api in modules (npm)
+    - [ ] epfl-ldap
+    - [ ] epfl-ldap-mapper
+    - [ ] epfl-error-handler (epfl-exceptions)
 - [ ] Cache
 - [x] Implement test suite
     - Done thanks to [mocha](https://github.com/mochajs/mocha/wiki)
@@ -30,12 +34,12 @@
     - http://google.github.io/styleguide/javascriptguide.xml
 - [ ] Normalize or standardize models to send back
 - [ ] Manage cycle of life of api by a version management
-- [ ] Manage a subscription to services to allow access only on granted request (by unique GID in the url)
-- [ ] Error management
+- [x] Manage a subscription to services to allow access only on granted request (by unique GID in the url)
+- [x] Error management
 - [ ] Add HTTPS by default
 - [ ] Extend API to more services (i.e. inventory numbers, epnet, ...)
 
 # Notes
 It should be used in the intranet and it shouldn't be published outside DIODE
 
-The `[public]` parameter in the url has to be replaced by a personal GUID managed in `inputValidators.js`
+The `[public]` parameter in the url has to be replaced by a personal GUID managed in `keyDataFilter.js`
