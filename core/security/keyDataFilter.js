@@ -18,7 +18,7 @@ module.exports = function keyDataFilter(app) {
     }
 
     var middleware = function (req, res, next) {
-        var ForbiddenException = require('../exceptions').ForbiddenException;
+        var ForbiddenException = require('epfl-exceptions').ForbiddenException;
         var cap;
         
         if (req.key === 'public') {

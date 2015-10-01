@@ -2,7 +2,7 @@
 (function (unitsController) {
     unitsController.init = function (app) {
         var keyDataFilter = require('../core/security/keyDataFilter')(app);
-        var ParameterException = require('../core/exceptions').ParameterException;
+        var ParameterException = require('epfl-exceptions').ParameterException;
 
         function showResult(req, res, results) {
             if (req.query.html != undefined) {

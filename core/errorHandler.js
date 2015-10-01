@@ -1,5 +1,5 @@
 ﻿'use strict';
-var exceptions = require('./exceptions');
+var exceptions = require('epfl-exceptions');
 var ParameterException = exceptions.ParameterException;
 var ServerException = exceptions.ServerException;
 var ForbiddenException = exceptions.ForbiddenException;

@@ -22,7 +22,8 @@
 - [ ] Split api in modules (npm)
     - [ ] epfl-ldap
     - [ ] epfl-ldap-mapper
-    - [ ] epfl-error-handler (epfl-exceptions)
+    - [ ] epfl-error-handler
+    - [x] epfl-exceptions
 - [ ] Cache
 - [x] Implement test suite
     - Done thanks to [mocha](https://github.com/mochajs/mocha/wiki)

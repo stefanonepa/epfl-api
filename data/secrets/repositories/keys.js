@@ -34,7 +34,7 @@ module.exports = function keysRepository(keysContext) {
         var prop;
         var valid = false;
 
-        while (i < len || valid === false) {
+        while (i < len && valid === false) {
             prop = keys[i];
             keysContext.usersKeys[prop].filter(function (currentKey) {
                 if (currentKey == key) {
