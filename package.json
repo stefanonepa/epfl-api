@@ -21,7 +21,8 @@
     "passport-tequila": "^0.1.6",
     "q": "^1.4.1",
     "serve-favicon": "^2.3.0",
-    "epfl-exceptions": "^0.0.1"
+    "epfl-exceptions": "^0.0.1",
+    "epfl-ldap":"*"
   },
   "devDependencies": {
     "jshint": "^2.8.0",

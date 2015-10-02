@@ -1,13 +1,21 @@
 ﻿'use strict';
 module.exports = function (context) {
+    var ldapContext = require('epfl-ldap')();
 
     var userFactory = require('../models/user');
     var usersRepo = {};
     var client = context.client;
 
     usersRepo.getUserBySciper = function (req, res, next) {
-        req.ldapQuery = '(&(objectClass=posixAccount)(|(uniqueIdentifier=' + req.sciper + ')))';
-        executeQuery(req, res, next);
+        ldapContext.users.getUserBySciper(req.sciper, function(data) {
+            if (data.length == 0) {
+                next(new Error("not found"));
+            } else if (data.length == 1) {
+                next(req, res, [client.options.capability.view(data[0])]);
+            } else {
+                next(new Error("too many found"));
+            }
+        });
     };
     
     usersRepo.getUserByName = function (req, res, next) {

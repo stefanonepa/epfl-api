@@ -22,8 +22,7 @@ describe('Initial checks', function () {
     });
 });
 
-describe('API / User', function(){
-
+describe('API /users', function(){
     // Testing getUserBySciper
     it('should be able to read JSON data',function(done){
         request.get('http://localhost:3000/api/public/users/sciper/169419', function(err, json, headers) {
@@ -99,6 +98,32 @@ describe('API / User', function(){
     it('should be able to search user by UnitAcronym', function (done) {
         request.get('http://localhost:3000/api/public/users/unit/enac-it', function (err, json, headers) {
             assert.notEqual(json.body.search('Nepa'), -1, 'Nepa must be found by searching "enac-it" keyword');
+            done();
+        });
+    });
+
+    // Testing sciper
+    it('should not be able to read optional properties data',function(done){
+        request.get('http://localhost:3000/api/public/users/sciper/169419', function(err, json, headers) {
+
+            var dataArray = JSON.parse(json.body);
+            debug(JSON.stringify(dataArray[0]));
+
+            assert.equal(dataArray[0].optionalProperties, undefined, 'Checking that optional prop are undef with public access');
+            done();
+        });
+    });
+});
+
+describe("API /user", function () {
+    it("returns a single object", function() {
+        request.get('http://localhost:3000/api/public/user/sciper/169419', function(err, json, headers) {
+
+            var dataArray = JSON.parse(json.body);
+            debug(JSON.stringify(dataArray[0]));
+
+            assert.equal(dataArray.status, 'success');
+            assert.equal(dataArray.data.displayName, 'Nicolas Borboën', 'Checking displayName value');
             done();
         });
     });
