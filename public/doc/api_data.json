@@ -1,7 +1,7 @@
 [
   {
     "type": "get",
-    "url": "/user/name/:name",
+    "url": "/public/user/name/:name",
     "title": "Request User information by NAME",
     "name": "GetUserByName",
     "group": "User",
@@ -56,43 +56,7 @@
   },
   {
     "type": "get",
-    "url": "/user/public/sciper/:sciper",
-    "title": "Request User information by SCIPER",
-    "name": "GetUserBySciper",
-    "group": "User",
-    "version": "0.0.1",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "<p>Sciper</p> ",
-            "optional": false,
-            "field": "sciper",
-            "description": "<p>Users unique EPFL-Sciper.</p> "
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "<p>Object</p> ",
-            "optional": false,
-            "field": "Epfl",
-            "description": "<p>informations of the User.</p> "
-          }
-        ]
-      }
-    },
-    "filename": "api/usersController.js",
-    "groupTitle": "User"
-  },
-  {
-    "type": "get",
-    "url": "/user/:internal/sciper/:sciper",
+    "url": "/public/user/sciper/:sciper",
     "title": "Request User information by SCIPER",
     "name": "GetUserBySciper",
     "group": "User",
