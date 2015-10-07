@@ -20,8 +20,7 @@
 
 # ToDo
 - [ ] Split api in modules (npm)
-    - [ ] epfl-ldap
-    - [ ] epfl-ldap-mapper
+    - [x] epfl-ldap (with a model mapper)
     - [ ] epfl-error-handler
     - [x] epfl-exceptions
 - [ ] Cache
@@ -33,7 +32,6 @@
     - https://github.com/airbnb/javascript
     - https://github.com/rwaldron/idiomatic.js
     - http://google.github.io/styleguide/javascriptguide.xml
-- [ ] Normalize or standardize models to send back
 - [ ] Manage cycle of life of api by a version management
 - [x] Manage a subscription to services to allow access only on granted request (by unique GID in the url)
 - [x] Error management

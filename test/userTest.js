@@ -27,10 +27,10 @@ describe('API /users', function(){
     it('should be able to read JSON data',function(done){
         request.get('http://localhost:3000/api/public/users/sciper/169419', function(err, json, headers) {
 
-            var dataArray = JSON.parse(json.body);
-            debug(JSON.stringify(dataArray[0]));
+            var data = JSON.parse(json.body);
+            debug(JSON.stringify(data));
 
-            assert.equal(dataArray[0].displayName, 'Nicolas Borboën', 'Checking displayName value');
+            assert.equal(data.displayName, 'Nicolas Borboën', 'Checking displayName value');
             done();
         });
     });
@@ -56,10 +56,10 @@ describe('API /users', function(){
     it('should be able to read JSON data with guest sciper',function(done){
         request.get('http://localhost:3000/api/public/users/sciper/G18171', function(err, json, headers) {
 
-            var dataArray = JSON.parse(json.body);
-            debug(JSON.stringify(dataArray[0]));
+            var data = JSON.parse(json.body);
+            debug(JSON.stringify(data));
 
-            assert.equal(dataArray[0].displayName, 'Nicolas Borboen', 'Checking displayName value');
+            assert.equal(data.displayName, 'Nicolas Borboen', 'Checking displayName value');
             done();
         });
     });
@@ -94,7 +94,7 @@ describe('API /users', function(){
         });
     });
 
-    // Testing searchUserByPhone
+    // Testing searchUserByUnitAcronym
     it('should be able to search user by UnitAcronym', function (done) {
         request.get('http://localhost:3000/api/public/users/unit/enac-it', function (err, json, headers) {
             assert.notEqual(json.body.search('Nepa'), -1, 'Nepa must be found by searching "enac-it" keyword');
@@ -106,10 +106,10 @@ describe('API /users', function(){
     it('should not be able to read optional properties data',function(done){
         request.get('http://localhost:3000/api/public/users/sciper/169419', function(err, json, headers) {
 
-            var dataArray = JSON.parse(json.body);
-            debug(JSON.stringify(dataArray[0]));
+            var data = JSON.parse(json.body);
+            debug(JSON.stringify(data));
 
-            assert.equal(dataArray[0].optionalProperties, undefined, 'Checking that optional prop are undef with public access');
+            assert.equal(data.optionalProperties, undefined, 'Checking that optional prop are undef with public access');
             done();
         });
     });

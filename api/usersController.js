@@ -3,6 +3,7 @@
     usersController.init = function (app) {
         var keyDataFilter = require('../core/security/keyDataFilter')(app);
         var ParameterException = require('epfl-exceptions').ParameterException;
+        var validator = require('../core/security/inputValidators');
         
         function showResult(req, res, results) {
             if (req.query.html != undefined) {
@@ -13,41 +14,44 @@
         }
 
         app.get('/sciper/:sciper', keyDataFilter, function (req, res) {
-
-            if (req.dataContext.validator.isUserSciperValid(req.params.sciper)) {
-                req.sciper = req.params.sciper;
-                req.dataContext.users.getUserBySciper(req, res, showResult);
+            var sciper = req.params.sciper;
+            if (validator.isUserSciperValid(sciper)) {
+                req.dataContext.users.getUserBySciper(sciper, function(data) {
+                    showResult(req, res, data);
+                });
             } else {
                 throw new ParameterException({message: 'Sciper not valid!', parameterName: 'sciper'});
             }
-
         });
 
         app.get('/name/:name', keyDataFilter, function (req, res) {
 
             var name = req.params.name;
-            if (req.dataContext.validator.isUserNameQueryValid(name)) {
-                req.name = name;
-                req.dataContext.users.getUserByName(req, res, showResult);
+            if (validator.isUserNameQueryValid(name)) {
+                req.dataContext.users.getUserByName(name, function (data) {
+                    showResult(req, res, data);
+                });
             } else {
                 throw new ParameterException({ message: 'Name not valid!', parameterName: 'name' });
             }
-
         });
 
         app.get('/search/:name', keyDataFilter, function(req, res) {
-            req.name = req.params.name;
-            req.dataContext.users.searchUserByName(req, res, showResult);
+            req.dataContext.users.searchUserByName(req.params.name, function (data) {
+                showResult(req, res, data);
+            });
         });
 
         app.get('/phone/:phone', keyDataFilter, function(req, res) {
-            req.phone = req.params.phone;
-            req.dataContext.users.searchUserByPhone(req, res, showResult);
+            req.dataContext.users.searchUserByPhone(req.params.phone, function (data) {
+                showResult(req, res, data);
+            });
         });
 
         app.get('/unit/:unitAcronym', keyDataFilter, function (req, res) {
-            req.unitAcronym = req.params.unitAcronym;
-            req.dataContext.users.searchUserByUnitAcronym(req, res, showResult);
+            req.dataContext.users.searchUserByUnitAcronym(req.params.unitAcronym, function (data) {
+                showResult(req, res, data);
+            });
         });
     };
 })(module.exports);

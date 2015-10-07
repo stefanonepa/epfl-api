@@ -1,6 +1,6 @@
 {
   "name": "epfl-api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "epfl-api",
   "main": "server.js",
   "homepage": "https://github.com/stefanonepa/epfl-api",
@@ -22,7 +22,7 @@
     "q": "^1.4.1",
     "serve-favicon": "^2.3.0",
     "epfl-exceptions": "^0.0.1",
-    "epfl-ldap":"*"
+    "epfl-ldap":"^0.1.4"
   },
   "devDependencies": {
     "jshint": "^2.8.0",
