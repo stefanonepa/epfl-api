@@ -7,24 +7,22 @@ block content
         a(href="https://github.com/stefanonepa/epfl-api") github repository
 
     h2 General usage
-    p You can add the "html" parameter in the URL query string to have an HTML view of the results. Example:&nbsp;
-    a(href='/api/public/users/sciper/150938?html') /api/public/users/sciper/150938?html
-
     p Two API are avalaible
-        ul
-            li /api/public : For external data access - only public informations
-            li /api/internal : For internal data access - more information, but you will need an EPFL accreditation and ask for an API key&nbsp;
-                a(href='/app/keysManagement') here
-
-
-    h3 Tips
-    p #[span Install] #[a(href="http://jsonview.com/") JSONview] #[plugin for your browser. It will simplify a lot the viewing of API pages!]
+    ul
+        li /api/public : For external data access - only public informations
+        li /api/internal : For internal data access - more information, but you will need an EPFL accreditation and ask for an API key&nbsp;
+            a(href='/app/keysManagement') here
 
     h3 API Keys management
     p
-        a(href='http://localhost:3000/app/keysManagement') http://localhost:3000/app/keysManagement
+        a(href='/app/keysManagement') http://localhost:3000/app/keysManagement
 
-    h2 API usage (examples with public access)
+
+    h3 API usage (examples with public access)
+
+    a(href='/doc/') Auto Documentation (apidoc)
+
+    h4 Quick links
     ul
         li api
             ul
@@ -86,3 +84,9 @@ block content
                                             a(href='/api/public/units/search/sti') sti*
                                         li
                                             a(href='/api/public/units/search/enac-') enac-*
+
+    h3 Tips
+    p #[span Install] #[a(href="http://jsonview.com/") JSONview] #[plugin for your browser. It will simplify a lot the viewing of API pages!]
+
+    p You can add the "html" parameter in the URL query string to have an HTML view of the results. Example:&nbsp;
+    a(href='/api/public/users/sciper/150938?html') /api/public/users/sciper/150938?html

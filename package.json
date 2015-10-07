@@ -22,9 +22,13 @@
     "q": "^1.4.1",
     "serve-favicon": "^2.3.0",
     "epfl-exceptions": "^0.0.1",
-    "epfl-ldap":"^0.1.4"
+    "epfl-ldap": "^0.1.4"
   },
   "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-apidoc": "^0.10.1",
+    "apidoc": "^0.13.1",
     "jshint": "^2.8.0",
     "mocha": "*",
     "pre-commit": "^1.1.1",
@@ -54,5 +58,9 @@
     "api",
     "ldap"
   ],
-  "license": "ISC"
+  "license": "ISC",
+  "apidoc": {
+    "title": "API EPFL-LDAP",
+    "url": "https://localhost:3000"
+  }
 }
