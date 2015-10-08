@@ -2,5 +2,8 @@
 extends layout
 
 block content
-    each user in users
-        +userMix(user)
+    if(users instanceof Array)
+        each user in users
+            +userMix(user)
+    else
+        +userMix(users)

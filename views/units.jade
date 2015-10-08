@@ -2,5 +2,8 @@
 extends layout
 
 block content
-    each unit in units
+    if(units instanceof Array)
+       each unit in units
         +unitMix(unit)
+    else
+        +unitMix(units)

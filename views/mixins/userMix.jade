@@ -10,17 +10,18 @@
     div(style="float:right, display:block")
         div Sciper :&nbsp;
             a(href="http://people.epfl.ch/cgi-bin/people?op=admindata&lang=en&cvlang=en&id="+userData.sciper) !{userData.sciper}
-    each accred in userData.accreds
-        div(style="float:right, display:block")
-            h3 !{accred.unitAcronym}
-        div(style="float:right, display:block")
-            div Place :&nbsp;
-                a(href="http://plan.epfl.ch/?q="+accred.office) !{accred.office}
-        div(style="float:right, display:block")
-            div Phone :&nbsp;
-                a(href="https://jabberguest.epfl.ch/call/"+accred.phone) !{accred.phone}
-        div(style="float:right, display:block")
-            div Address :&nbsp;
-                br
-                - var add = accred.address.replace(/\$/g, "<br />");
-                span !{add}
+    if(userData.accreds)
+        each accred in userData.accreds
+            div(style="float:right, display:block")
+                h3 !{accred.unitAcronym}
+            div(style="float:right, display:block")
+                div Place :&nbsp;
+                    a(href="http://plan.epfl.ch/?q="+accred.office) !{accred.office}
+            div(style="float:right, display:block")
+                div Phone :&nbsp;
+                    a(href="https://jabberguest.epfl.ch/call/"+accred.phone) !{accred.phone}
+            div(style="float:right, display:block")
+                div Address :&nbsp;
+                    br
+                    - var add = accred.address.replace(/\$/g, "<br />");
+                    span !{add}
