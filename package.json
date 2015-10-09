@@ -10,7 +10,7 @@
     "cookie-parser": "^1.4.0",
     "debug": "^2.2.0",
     "epfl-exceptions": "0.0.1",
-    "epfl-ldap": "^0.1.4",
+    "epfl-ldap": "^0.1.5",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
     "jade": "^1.6.0",

@@ -6,19 +6,28 @@ var validator = require('../core/security/inputValidators');
 var controllers = {
     sciper: {
         isValid: validator.isUserSciperValid,
-        model: "getUsersBySciper"
+        validationException: new ParameterException({ message: 'Sciper not valid!', parameterName: 'sciper' }),
+        model: "getUsersBySciper",
     },
     name: {
         isValid: validator.isUserNameQueryValid,
+        validationException: new ParameterException({ message: 'Name not valid!', parameterName: 'name'  }),
         model: "getUsersByName"
     },
     search: {
         isValid: validator.isUserNameQueryValid,
+        validationException: new ParameterException({ message: 'Name not valid!', parameterName: 'name'  }),
         model: "searchUserByName"
     },
     phone: {
         isValid: validator.isUserPhoneValid,
+        validationException: new ParameterException({ message: 'Phone not valid!', parameterName: 'phone' }),
         model: "getUsersByPhone"
+    },
+    unitAcronym: {
+        isValid: validator.isUnitAcronymValid,
+        validationException: new ParameterException({ message: 'UnitAcronym not valid!', parameterName: 'unitAcronym' }),
+        model: "getUsersByUnitAcronym"
     }
 };
 
@@ -44,13 +53,13 @@ var controllers = {
             }
         }
 
-        function handler(req, res, value, validatorName){
-            if (controllers[validatorName].isValid(value)) {
-                req.dataContext.users.getUsersBySciper(sciper, function(data) {
+        function handler(req, res, value, actionName){
+            if (controllers[actionName].isValid(value)) {
+                req.dataContext.users[controllers[actionName].model](value, function(data) {
                     showResult(req, res, data);
                 });
             } else {
-                throw new ParameterException({message: 'Sciper not valid!', parameterName: 'sciper'});
+                throw controllers[actionName].validationException;
             }
         };
 
@@ -73,14 +82,7 @@ var controllers = {
         *
         */
         app.get('/sciper/:sciper', keyDataFilter, function (req, res) {
-            var sciper = req.params.sciper;
-            if (controllers["sciper"].isValid(sciper)) {
-                req.dataContext.users.getUsersBySciper(sciper, function(data) {
-                    showResult(req, res, data);
-                });
-            } else {
-                throw new ParameterException({message: 'Sciper not valid!', parameterName: 'sciper'});
-            }
+            handler(req, res, req.params.sciper, 'sciper');
         });
         
         /**
@@ -102,39 +104,19 @@ var controllers = {
         *
         */
         app.get('/name/:name', keyDataFilter, function (req, res) {
-
-            var name = req.params.name;
-            if (controllers["name"].isValid(name)) {
-                req.dataContext.users.getUsersByName(name, function (data) {
-                    showResult(req, res, data);
-                });
-            } else {
-                throw new ParameterException({ message: 'Name not valid!', parameterName: 'name' });
-            }
+            handler(req, res, req.params.name, 'name');
         });
 
         app.get('/search/:name', keyDataFilter, function(req, res) {
-            var name = req.params.name;
-            if (controllers["name"].isValid(name)) {
-                req.dataContext.users.searchUserByName(name, function (data) {
-                    showResult(req, res, data);
-                });
-            }
+            handler(req, res, req.params.name, 'search');
         });
 
         app.get('/phone/:phone', keyDataFilter, function(req, res) {
-            var phone =req.params.phone;
-            if (controllers["phone"].isValid(phone)) {
-                req.dataContext.users.getUsersByPhone(phone, function (data) {
-                    showResult(req, res, data);
-                });
-            }
+            handler(req, res, req.params.phone, 'phone'); 
         });
 
         app.get('/unit/:unitAcronym', keyDataFilter, function (req, res) {
-            req.dataContext.users.getUsersByUnitAcronym(req.params.unitAcronym, function (data) {
-                showResult(req, res, data);
-            });
+            handler(req, res, req.params.unitAcronym, 'unitAcronym'); 
         });
     };
 })(module.exports);
