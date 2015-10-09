@@ -2,29 +2,36 @@
 
 var ParameterException = require('epfl-exceptions').ParameterException;
 var validator = require('../core/security/inputValidators');
+var render = require('./_render');
+var handler = require('./_handler');
 
 var controllers = {
     sciper: {
+        name: 'sciper',
         isValid: validator.isUserSciperValid,
         validationException: new ParameterException({ message: 'Sciper not valid!', parameterName: 'sciper' }),
         model: "getUsersBySciper",
     },
     name: {
+        name: 'name',
         isValid: validator.isUserNameQueryValid,
         validationException: new ParameterException({ message: 'Name not valid!', parameterName: 'name'  }),
         model: "getUsersByName"
     },
     search: {
+        name: 'search',
         isValid: validator.isUserNameQueryValid,
         validationException: new ParameterException({ message: 'Name not valid!', parameterName: 'name'  }),
         model: "searchUserByName"
     },
     phone: {
+        name: 'phone',
         isValid: validator.isUserPhoneValid,
         validationException: new ParameterException({ message: 'Phone not valid!', parameterName: 'phone' }),
         model: "getUsersByPhone"
     },
     unitAcronym: {
+        name: 'unitAcronym',
         isValid: validator.isUnitAcronymValid,
         validationException: new ParameterException({ message: 'UnitAcronym not valid!', parameterName: 'unitAcronym' }),
         model: "getUsersByUnitAcronym"
@@ -34,34 +41,6 @@ var controllers = {
 (function (usersController) {
     usersController.init = function (app) {
         var keyDataFilter = require('../core/security/keyDataFilter')(app);
-
-        function showResult(req, res, results) {
-            var unic = req.query.unique;
-
-            if (req.query.html != undefined) {
-                res.render('users', {users: results});
-            } else {
-                if (unic && results.length !== 1) {
-                    res.json({
-                        status: "error",
-                        details: (results.length == 0 ? "No results":
-                            "Too many results")
-                    });
-                } else {
-                    res.json({status: "ok", results: results});
-                }
-            }
-        }
-
-        function handler(req, res, value, actionName){
-            if (controllers[actionName].isValid(value)) {
-                req.dataContext.users[controllers[actionName].model](value, function(data) {
-                    showResult(req, res, data);
-                });
-            } else {
-                throw controllers[actionName].validationException;
-            }
-        };
 
         /**
         * @api {get} /public/user/sciper/:sciper Request User information by SCIPER
@@ -82,7 +61,7 @@ var controllers = {
         *
         */
         app.get('/sciper/:sciper', keyDataFilter, function (req, res) {
-            handler(req, res, req.params.sciper, 'sciper');
+            handler(req, res, req.params.sciper, 'sciper', 'users', controllers);
         });
         
         /**
@@ -104,19 +83,19 @@ var controllers = {
         *
         */
         app.get('/name/:name', keyDataFilter, function (req, res) {
-            handler(req, res, req.params.name, 'name');
+            handler(req, res, req.params.name, 'name', 'users', controllers);
         });
 
         app.get('/search/:name', keyDataFilter, function(req, res) {
-            handler(req, res, req.params.name, 'search');
+            handler(req, res, req.params.name, 'search', 'users', controllers);
         });
 
         app.get('/phone/:phone', keyDataFilter, function(req, res) {
-            handler(req, res, req.params.phone, 'phone'); 
+            handler(req, res, req.params.phone, 'phone', 'users', controllers); 
         });
 
         app.get('/unit/:unitAcronym', keyDataFilter, function (req, res) {
-            handler(req, res, req.params.unitAcronym, 'unitAcronym'); 
+            handler(req, res, req.params.unitAcronym, 'unitAcronym', 'users', controllers); 
         });
     };
 })(module.exports);
