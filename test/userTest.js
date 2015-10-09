@@ -30,7 +30,7 @@ describe('API /users', function(){
             var data = JSON.parse(json.body);
             debug(JSON.stringify(data));
 
-            assert.equal(data.displayName, 'Nicolas Borboën', 'Checking displayName value');
+            assert.equal(data.results[0].displayName, 'Nicolas Borboën', 'Checking displayName value');
             done();
         });
     });
@@ -59,7 +59,19 @@ describe('API /users', function(){
             var data = JSON.parse(json.body);
             debug(JSON.stringify(data));
 
-            assert.equal(data.displayName, 'Nicolas Borboen', 'Checking displayName value');
+            assert.equal(data.results[0].displayName, 'Nicolas Borboen', 'Checking displayName value');
+            done();
+        });
+    });
+
+    // Test getUserByName
+    it('raises error when non-unique',function(done){
+        request.get('http://localhost:3000/api/public/users/name/ban?unique=1', function(err, json, headers) {
+
+            var data = JSON.parse(json.body);
+            debug(JSON.stringify(data));
+
+            assert.equal(data.status, "error", "Should get an error");
             done();
         });
     });
@@ -68,10 +80,10 @@ describe('API /users', function(){
     it('should be able to get user by Name',function(done){
         request.get('http://localhost:3000/api/public/users/name/bancal', function(err, json, headers) {
 
-            var dataArray = JSON.parse(json.body);
-            debug(JSON.stringify(dataArray[0]));
+            var data = JSON.parse(json.body);
+            debug(JSON.stringify(data));
 
-            assert.equal(dataArray[0].displayName, 'Samuel Bancal', 'Checking displayName value');
+            assert.equal(data.results[0].displayName, 'Samuel Bancal', 'Checking displayName value');
             done();
         });
     });
@@ -88,8 +100,8 @@ describe('API /users', function(){
     // Testing searchUserByPhone
     it('should be able to search user by Phone',function(done){
         request.get('http://localhost:3000/api/public/users/phone/35455', function(err, json, headers) {
-            assert.equal(JSON.parse(json.body)[0].sciper, '169419', 'Checking that sciper is correct to this phone value');
-            assert.equal(JSON.parse(json.body)[0].accreds[0].phone, '+41 21 6935455', 'Checking that phone number is present in the first accred');
+            assert.equal(JSON.parse(json.body).results[0].sciper, '169419', 'Checking that sciper is correct to this phone value');
+            assert.equal(JSON.parse(json.body).results[0].accreds[0].phone, '+41 21 6935455', 'Checking that phone number is present in the first accred');
             done();
         });
     });
@@ -117,7 +129,7 @@ describe('API /users', function(){
 
 describe("API /user", function () {
     it("returns a single object", function() {
-        request.get('http://localhost:3000/api/public/user/sciper/169419', function(err, json, headers) {
+        request.get('http://localhost:3000/api/public/users/sciper/169419?unique=1', function(err, json, headers) {
 
             var dataArray = JSON.parse(json.body);
             debug(JSON.stringify(dataArray[0]));

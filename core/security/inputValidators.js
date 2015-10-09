@@ -21,6 +21,11 @@ module.exports = {
         var regexp = /^(\w|-){1,30}$/gi;
         var match = unitAcronym.match(regexp);
         return match !== null;
+    },
+
+    isUserPhoneValid: function (phone) {
+        return true;
+
     }
 
 };
