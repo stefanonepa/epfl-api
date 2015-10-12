@@ -42,14 +42,7 @@ define({ "api": [
             "description": "<p>The name of the User was not found.</p> "
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "HTTP/1.1 404 Not Found\n{\n  \"error\": \"UserNotFound\"\n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "filename": "api/usersController.js",
     "groupTitle": "User"
@@ -97,14 +90,7 @@ define({ "api": [
             "description": "<p>The sciper of the User was not found.</p> "
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "HTTP/1.1 404 Not Found\n{\n  \"error\": \"UserNotFound\"\n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "filename": "api/usersController.js",
     "groupTitle": "User"

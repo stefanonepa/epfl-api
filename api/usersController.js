@@ -53,15 +53,9 @@ var controllers = {
         * 
         * @apiError UserNotFound The sciper of the User was not found.
         *
-        * @apiErrorExample Error-Response:
-        *     HTTP/1.1 404 Not Found
-        *     {
-        *       "error": "UserNotFound"
-        *     }
-        *
         */
         app.get('/sciper/:sciper', keyDataFilter, function (req, res) {
-            handler(req, res, req.params.sciper, 'sciper', 'users', controllers);
+            handler(req, res, req.params.sciper, 'users', controllers.sciper);
         });
         
         /**
@@ -74,28 +68,22 @@ var controllers = {
         * @apiSuccess {Array} Epfl informations of Users.
         * 
         * @apiError UserNotFound The name of the User was not found.
-        *
-        * @apiErrorExample Error-Response:
-        *     HTTP/1.1 404 Not Found
-        *     {
-        *       "error": "UserNotFound"
-        *     }
-        *
+        * 
         */
         app.get('/name/:name', keyDataFilter, function (req, res) {
-            handler(req, res, req.params.name, 'name', 'users', controllers);
+            handler(req, res, req.params.name, 'users', controllers.name);
         });
 
         app.get('/search/:name', keyDataFilter, function(req, res) {
-            handler(req, res, req.params.name, 'search', 'users', controllers);
+            handler(req, res, req.params.name, 'users', controllers.search);
         });
 
         app.get('/phone/:phone', keyDataFilter, function(req, res) {
-            handler(req, res, req.params.phone, 'phone', 'users', controllers); 
+            handler(req, res, req.params.phone, 'users', controllers.phone); 
         });
 
         app.get('/unit/:unitAcronym', keyDataFilter, function (req, res) {
-            handler(req, res, req.params.unitAcronym, 'unitAcronym', 'users', controllers); 
+            handler(req, res, req.params.unitAcronym, 'users', controllers.unitAcronym); 
         });
     };
 })(module.exports);

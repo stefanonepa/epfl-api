@@ -1,22 +1,28 @@
 ﻿extends ../layout
 
 block content
-    table(class="table table-striped table-hover table-condensed" style="width: auto !important;" )
+    table(class="table table-striped table-hover table-condensed" style="width: 550px !important;" )
                 thead
                     tr
                         th Keys
-                        th Remove
                 tbody
                     if keys.length > 0     
                         each key in keys
                             tr
                                 td
-                                    !{key}
-                                td
-                                    a(href='/app/keysManagement/delete/#{key}' class='btn  btn-danger') &times;
+                                    div( class="input-group")
+                                        input( type="text" class="form-control key" value = "#{key}") 
+                                        div( class="input-group-btn")  
+                                            a(class='btn  btn-warning copy-key') 
+                                                span( class="glyphicon glyphicon-copy" aria-hidden="true")   
+                                            a(href='/app/keysManagement/delete/#{key}' class='btn  btn-danger') 
+                                                span( class="glyphicon glyphicon-remove" aria-hidden="true")   
+                                            
                 tfoot
                     tr
                         td
-                            a(href="/app/keysManagement/add" class='btn  btn-success') ADD
-                
+                            a(href="/app/keysManagement/add" class='btn  btn-success btn-sm') ADD
+   
+   block scripts
+    script(src='/scripts/script.js')             
                 

@@ -15,6 +15,10 @@ module.exports = {
         //var match = nameQuery.match(regexp);
         //return match !== null;S
     },
+    
+    isUserPhoneValid: function (phone) {
+        return true;
+    },
 
     //TODO: review the regexp
     isUnitAcronymValid: function (unitAcronym) {
@@ -22,10 +26,9 @@ module.exports = {
         var match = unitAcronym.match(regexp);
         return match !== null;
     },
-
-    isUserPhoneValid: function (phone) {
+    
+    isUnitIdValid: function (id) {
         return true;
-
     }
 
 };

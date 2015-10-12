@@ -12,7 +12,7 @@ describe('API / Unit', function(){
     it('should be able to read JSON data',function(done){
         request.get('http://localhost:3000/api/public/units/name/igm-ge', function(err, json, headers) {
             var data = JSON.parse(json.body);
-            assert.equal(data.cn, 'igm-ge', 'Checking cn value');
+            assert.equal(data.results.cn, 'igm-ge', 'Checking cn value');
             done();
         });
     });
