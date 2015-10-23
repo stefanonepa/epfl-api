@@ -7,6 +7,7 @@
   "author": "nepa <stefano.nepa@epfl.ch>",
   "dependencies": {
     "body-parser": "^1.14.1",
+    "node-cache": "^3.0.0",
     "cookie-parser": "^1.4.0",
     "debug": "^2.2.0",
     "epfl-exceptions": "0.0.1",

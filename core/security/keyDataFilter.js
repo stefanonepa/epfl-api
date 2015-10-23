@@ -8,7 +8,6 @@ module.exports = function keyDataFilter(app) {
     var middleware = function (req, res, next) {
         var viewModelsMapper;
         req.dataContext = require('epfl-ldap')();
-
         if (req.key === 'public') {
             viewModelsMapper = req.dataContext.viewModelsMappers.public;
         } else {
