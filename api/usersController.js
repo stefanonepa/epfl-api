@@ -10,7 +10,7 @@ var controllers = {
         name: 'sciper',
         isValid: validator.isUserSciperValid,
         validationException: new ParameterException({ message: 'Sciper not valid!', parameterName: 'sciper' }),
-        model: "getUsersBySciper",
+        model: "getUsersBySciper"
     },
     name: {
         name: 'name',

@@ -1,4 +1,4 @@
-﻿'use strict'
+﻿'use strict';
 module.exports = function render(req, res, results, routerName) {
     var unic = req.query.unique;
     
@@ -10,7 +10,7 @@ module.exports = function render(req, res, results, routerName) {
         if (unic && results.length !== 1) {
             res.json({
                 status: 'error',
-                details: (results.length == 0 ? 'No results':
+                details: (results.length === 0 ? 'No results':
                             'Too many results')
             });
         } else {
