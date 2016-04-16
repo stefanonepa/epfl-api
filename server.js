@@ -13,17 +13,22 @@ var keyContext = require('./data/secrets/context')();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 // Opt into Services
 //https://github.com/expressjs/morgan
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ secret: 'quoh8ukaechooBiong2eexeewa6pheuquengeiyedailae9EethohmeuDiecie5ahb2cat', resave: true,
-    saveUninitialized: true }));
+app.use(session({
+    secret: 'quoh8ukaechooBiong2eexeewa6pheuquengeiyedailae9EethohmeuDiecie5ahb2cat', resave: true,
+    saveUninitialized: true
+}));
 
-require('./core/security/tequilaConfig')(app);
+app.middlewares = {};
+app.middlewares.passportTequila = require('./core/security/tequilaConfig')(app),
+app.middlewares.roles = require('./core/security/roles')(app)
+
 keyContext.loadKeys();
 app.keyContext = keyContext;
 
@@ -35,7 +40,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 api.init(app);
 webApp.init(app);
 
-app.get('/',  function (req, res) {
+app.get('/', function (req, res) {
     res.render('homepage');
 });
 

@@ -9,7 +9,8 @@
                 var currentController = require('./' + name);
                 var currentRouter = require('express')();
                 currentRouter.keyContext = app.keyContext;
-
+                currentRouter.middlewares = app.middlewares;
+                
                 currentController.init(currentRouter);
                 app.use('/api/:key/' + name.replace('Controller', ''), currentRouter);
                 app.param('key', function (req, res, next, key) {

@@ -8,7 +8,7 @@
                 var name = file.replace('.js', '');
                 var currentController = require('./' + name);
                 var currentRouter = require('express')();
-                currentRouter.tequilaStrategy = app.tequilaStrategy;
+                currentRouter.middlewares = app.middlewares;
                 currentRouter.keyContext = app.keyContext;
 
                 currentController.init(currentRouter);

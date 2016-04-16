@@ -1,7 +1,4 @@
 ﻿'use strict';
-
-var q = require('q');
-
 module.exports = function secretsContext() {
     var fs = require('fs');
     var filePath = './data/secrets/dataStore.json';

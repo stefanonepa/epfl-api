@@ -4,19 +4,19 @@
         var keysContext = app.keyContext;
 
         // http://localhost:3000/app/keysManagement/list
-        app.get('/', app.tequilaStrategy.ensureAuthenticated, function (req, res) {
+        app.get('/', app.middlewares.passportTequila.ensureAuthenticated, function (req, res) {
             keysContext.keys.getKeysForUser(req, res, function(keys) {
                 res.render('keysManagement/list', { keys: keys });
             });
         });
 
-        app.get('/add', app.tequilaStrategy.ensureAuthenticated, function (req, res) {
+        app.get('/add', app.middlewares.passportTequila.ensureAuthenticated, function (req, res) {
             keysContext.keys.addKeysForUser(req, res, function (keys) {
                 res.redirect('./');
             });
         });
 
-        app.get('/delete/:apiKeyToDelete', app.tequilaStrategy.ensureAuthenticated, function (req, res) {
+        app.get('/delete/:apiKeyToDelete', app.middlewares.passportTequila.ensureAuthenticated, function (req, res) {
             req.apiKeyToDelete = req.params.apiKeyToDelete;
             keysContext.keys.deleteKeysForUser(req, res, function (keys) {
                 res.redirect('../');
