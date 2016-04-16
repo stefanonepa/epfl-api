@@ -1,5 +1,6 @@
 ﻿'use strict';
 module.exports = function keysRepository(keysContext) {
+
     var keysRepo = {};
 
     keysRepo.getKeysForUser = function (req, res, next) {
@@ -15,13 +16,13 @@ module.exports = function keysRepository(keysContext) {
     keysRepo.addKeysForUser = function (req, res, next) {
         var uuid = require('node-uuid');
         var clientKeys = keysContext.usersKeys[req.user.tequila.uniqueid] || [];
-        clientKeys.push(uuid.v4());
+        clientKeys.push({key: uuid.v4(), description: req.query.description});
         keysContext.saveKeys(req.user.tequila.uniqueid, clientKeys, next);
     };
 
     keysRepo.deleteKeysForUser = function (req, res, next) {
         var clientKeys = keysContext.usersKeys[req.user.tequila.uniqueid].filter(function (i) {
-            return i != req.apiKeyToDelete;
+            return i.key != req.apiKeyToDelete;
         });
         
         keysContext.saveKeys(req.user.tequila.uniqueid, clientKeys, next);
@@ -33,11 +34,11 @@ module.exports = function keysRepository(keysContext) {
         var i = 0;
         var prop;
         var valid = false;
-
+  
         while (i < len && valid === false) {
             prop = keys[i];
-            keysContext.usersKeys[prop].filter(function (currentKey) {
-                if (currentKey == key) {
+            keysContext.usersKeys[prop].filter(function (currentKeyInfo) {
+                if (currentKeyInfo.key == key) {
                     valid = true;
                 }
             });

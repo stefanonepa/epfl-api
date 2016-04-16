@@ -1,7 +1,7 @@
 ﻿'use strict';
 $(function () {    
     $('.copy-key').on('click', function (e) {
-        var el = $(this).parent().parent().children().first();
+        var el = $(this).parent().parent().children().eq(1);
         clip(el[0].value);
         //document.execCommand('copy');
         console.log("copy done!");

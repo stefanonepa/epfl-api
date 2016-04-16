@@ -1,27 +1,35 @@
 ﻿extends ../layout
 
 block content
-    table(class="table table-striped table-hover table-condensed" style="width: 550px !important;" )
+    table(class="table table-striped table-hover table-condensed" style="width: 950px !important;" )
                 thead
                     tr
                         th Keys
                 tbody
                     if keys.length > 0     
-                        each key in keys
+                        each keyInfo in keys
                             tr
                                 td
-                                    div( class="input-group")
-                                        input( type="text" class="form-control key" value=key) 
+                                    div( class="input-group" style="margin: 10px;")
+                                        span(class="input-group-addon") Key
+                                        input( type="text" class="form-control key" value=keyInfo.key)
                                         div( class="input-group-btn")  
                                             a(class='btn  btn-warning copy-key') 
-                                                span( class="glyphicon glyphicon-copy" aria-hidden="true")   
-                                            a(href='/app/keysManagement/delete/'+key class='btn  btn-danger') 
+                                                span( class="glyphicon glyphicon-copy" aria-hidden="true") 
+                                        span( class="input-group-addon" style="border-left: 0; border-right: 0;") Description
+                                        input( type="text" class="form-control description" value=keyInfo.description) 
+                                        div( class="input-group-btn")   
+                                            a(href='/app/keysManagement/delete/'+keyInfo.key class='btn  btn-danger') 
                                                 span( class="glyphicon glyphicon-remove" aria-hidden="true")   
                                             
                 tfoot
                     tr
                         td
-                            a(href="/app/keysManagement/add" class='btn  btn-success btn-sm') ADD
+                            form(action="/app/keysManagement/add", method="get")                             
+                                div( class="input-group")
+                                    input(name="description" type="text" class="form-control description" placeholder="Enter a description")
+                                    span( class="input-group-btn") 
+                                        button(type='submit' class='btn  btn-success') Add
    
 block scripts
     script(src='/scripts/script.js')             
