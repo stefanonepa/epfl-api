@@ -3,7 +3,6 @@
 module.exports = function(app) {
     var admins = ['150938'];
     var passport = require('passport');
-    //const util = require('util');
     var TequilaStrategy = require('passport-tequila').Strategy;
 
     passport.serializeUser(function(user, done) {
