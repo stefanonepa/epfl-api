@@ -51,7 +51,7 @@ app.get('/api/pomme', function (req, res) {
 //TODO: Enable and Refine the errorHanlder
 app.use(errorHandler);
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 console.log('Listening on port 3000...');
 
 module.exports = app;

@@ -10,7 +10,14 @@
                 var currentRouter = require('express')();
                 currentRouter.keyContext = app.keyContext;
                 currentRouter.middlewares = app.middlewares;
-                
+
+                //Accept request from all origins
+                currentRouter.use(function(req, res, next) {
+                    res.header('Access-Control-Allow-Origin', '*');
+                    res.header('Access-Control-Allow-Methods', 'GET');
+                    next();
+                });
+
                 currentController.init(currentRouter);
                 app.use('/api/:key/' + name.replace('Controller', ''), currentRouter);
                 app.param('key', function (req, res, next, key) {
