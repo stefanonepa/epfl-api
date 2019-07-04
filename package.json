@@ -23,7 +23,8 @@
     "passport-tequila": "^0.1.9",
     "pug": "^0.1.0",
     "serve-favicon": "^2.3.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -38,7 +39,9 @@
   "scripts": {
     "test": "mocha",
     "start": "node server.js",
-    "SayHello": "echo \"Pre Commit Says Hello !\" && exit 0"
+    "SayHello": "echo \"Pre Commit Says Hello !\" && exit 0",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "bugs": {
     "url": "https://github.com/stefanonepa/epfl-api/issues"
@@ -63,5 +66,6 @@
   "apidoc": {
     "title": "API EPFL-LDAP",
     "url": "https://localhost:3000"
-  }
+  },
+  "snyk": true
 }
